@@ -34,6 +34,7 @@
             this.infoPanel = new System.Windows.Forms.Panel();
             this.imageInformation = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.files = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.skipWinDirectoryCheckBox = new System.Windows.Forms.CheckBox();
             this.allDrivesCheckBox = new System.Windows.Forms.CheckBox();
@@ -79,7 +80,6 @@
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.files = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.infoPanel.SuspendLayout();
@@ -113,7 +113,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(866, 485);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(891, 485);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // statusStrip
@@ -123,7 +123,7 @@
             this.status});
             this.statusStrip.Location = new System.Drawing.Point(0, 465);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(866, 20);
+            this.statusStrip.Size = new System.Drawing.Size(891, 20);
             this.statusStrip.TabIndex = 6;
             this.statusStrip.Text = "statusStrip1";
             // 
@@ -140,9 +140,9 @@
             this.infoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.infoPanel.Controls.Add(this.imageInformation);
             this.infoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infoPanel.Location = new System.Drawing.Point(557, 263);
+            this.infoPanel.Location = new System.Drawing.Point(573, 263);
             this.infoPanel.Name = "infoPanel";
-            this.infoPanel.Size = new System.Drawing.Size(306, 199);
+            this.infoPanel.Size = new System.Drawing.Size(315, 199);
             this.infoPanel.TabIndex = 1;
             // 
             // imageInformation
@@ -153,7 +153,7 @@
             this.imageInformation.Multiline = true;
             this.imageInformation.Name = "imageInformation";
             this.imageInformation.ReadOnly = true;
-            this.imageInformation.Size = new System.Drawing.Size(304, 197);
+            this.imageInformation.Size = new System.Drawing.Size(313, 197);
             this.imageInformation.TabIndex = 0;
             this.imageInformation.TabStop = false;
             this.imageInformation.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageInformation_MouseDown);
@@ -165,8 +165,20 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 263);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(548, 199);
+            this.panel1.Size = new System.Drawing.Size(564, 199);
             this.panel1.TabIndex = 5;
+            // 
+            // files
+            // 
+            this.files.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.files.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.files.FormattingEnabled = true;
+            this.files.HorizontalScrollbar = true;
+            this.files.Location = new System.Drawing.Point(0, 0);
+            this.files.Name = "files";
+            this.files.Size = new System.Drawing.Size(562, 197);
+            this.files.TabIndex = 7;
+            this.files.SelectedIndexChanged += new System.EventHandler(this.files_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -179,7 +191,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(860, 54);
+            this.panel2.Size = new System.Drawing.Size(885, 54);
             this.panel2.TabIndex = 0;
             // 
             // skipWinDirectoryCheckBox
@@ -206,7 +218,7 @@
             // aboutButton
             // 
             this.aboutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.aboutButton.Location = new System.Drawing.Point(835, 3);
+            this.aboutButton.Location = new System.Drawing.Point(860, 3);
             this.aboutButton.Name = "aboutButton";
             this.aboutButton.Size = new System.Drawing.Size(22, 23);
             this.aboutButton.TabIndex = 2;
@@ -220,13 +232,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pathTextBox.Location = new System.Drawing.Point(7, 5);
             this.pathTextBox.Name = "pathTextBox";
-            this.pathTextBox.Size = new System.Drawing.Size(761, 20);
+            this.pathTextBox.Size = new System.Drawing.Size(786, 20);
             this.pathTextBox.TabIndex = 0;
             // 
             // browseButton
             // 
             this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.browseButton.Location = new System.Drawing.Point(772, 3);
+            this.browseButton.Location = new System.Drawing.Point(797, 3);
             this.browseButton.Name = "browseButton";
             this.browseButton.Size = new System.Drawing.Size(57, 23);
             this.browseButton.TabIndex = 1;
@@ -255,7 +267,7 @@
             this.settingsPanel.RowCount = 2;
             this.settingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
             this.settingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.settingsPanel.Size = new System.Drawing.Size(860, 194);
+            this.settingsPanel.Size = new System.Drawing.Size(885, 194);
             this.settingsPanel.TabIndex = 4;
             // 
             // groupBox1
@@ -268,7 +280,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(252, 120);
+            this.groupBox1.Size = new System.Drawing.Size(259, 120);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Дата фотосъемки";
@@ -298,7 +310,7 @@
             this.endDateTimePicker.Location = new System.Drawing.Point(27, 70);
             this.endDateTimePicker.MaxDate = new System.DateTime(4059, 11, 28, 0, 0, 0, 0);
             this.endDateTimePicker.Name = "endDateTimePicker";
-            this.endDateTimePicker.Size = new System.Drawing.Size(216, 20);
+            this.endDateTimePicker.Size = new System.Drawing.Size(223, 20);
             this.endDateTimePicker.TabIndex = 2;
             this.endDateTimePicker.Value = new System.DateTime(2018, 8, 26, 0, 0, 0, 0);
             // 
@@ -308,7 +320,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.startDateTimePicker.Location = new System.Drawing.Point(27, 43);
             this.startDateTimePicker.Name = "startDateTimePicker";
-            this.startDateTimePicker.Size = new System.Drawing.Size(216, 20);
+            this.startDateTimePicker.Size = new System.Drawing.Size(223, 20);
             this.startDateTimePicker.TabIndex = 1;
             // 
             // datesCheckBox
@@ -324,10 +336,10 @@
             // startButton
             // 
             this.startButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.startButton.Location = new System.Drawing.Point(553, 133);
+            this.startButton.Location = new System.Drawing.Point(568, 133);
             this.startButton.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(304, 58);
+            this.startButton.Size = new System.Drawing.Size(314, 58);
             this.startButton.TabIndex = 6;
             this.startButton.Text = "Начать поиск";
             this.startButton.UseVisualStyleBackColor = true;
@@ -341,9 +353,9 @@
             this.groupBox2.Controls.Add(this.WhiteBalanceСheckBox);
             this.groupBox2.Controls.Add(this.gpsCheckBox);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(553, 3);
+            this.groupBox2.Location = new System.Drawing.Point(568, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(304, 120);
+            this.groupBox2.Size = new System.Drawing.Size(314, 120);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры съемки";
@@ -365,7 +377,7 @@
             "Пейзажный режим"});
             this.exposureProgramComboBox.Location = new System.Drawing.Point(167, 87);
             this.exposureProgramComboBox.Name = "exposureProgramComboBox";
-            this.exposureProgramComboBox.Size = new System.Drawing.Size(131, 21);
+            this.exposureProgramComboBox.Size = new System.Drawing.Size(141, 21);
             this.exposureProgramComboBox.TabIndex = 4;
             // 
             // ExposureProgramCheckBox
@@ -416,9 +428,9 @@
             this.groupBox3.Controls.Add(this.label3);
             this.groupBox3.Controls.Add(this.ISOCheckBox);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(261, 3);
+            this.groupBox3.Location = new System.Drawing.Point(268, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(140, 120);
+            this.groupBox3.Size = new System.Drawing.Size(144, 120);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "ISO";
@@ -429,7 +441,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.maxISOTextBox.Location = new System.Drawing.Point(27, 69);
             this.maxISOTextBox.Name = "maxISOTextBox";
-            this.maxISOTextBox.Size = new System.Drawing.Size(103, 20);
+            this.maxISOTextBox.Size = new System.Drawing.Size(107, 20);
             this.maxISOTextBox.TabIndex = 2;
             this.maxISOTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ISOVerify);
             // 
@@ -439,7 +451,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.minISOTextBox.Location = new System.Drawing.Point(27, 43);
             this.minISOTextBox.Name = "minISOTextBox";
-            this.minISOTextBox.Size = new System.Drawing.Size(103, 20);
+            this.minISOTextBox.Size = new System.Drawing.Size(107, 20);
             this.minISOTextBox.TabIndex = 1;
             this.minISOTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ISOVerify);
             // 
@@ -479,9 +491,9 @@
             this.groupBox4.Controls.Add(this.minExposureTimeTextBox);
             this.groupBox4.Controls.Add(this.ExposureTimeCheckBox);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox4.Location = new System.Drawing.Point(407, 3);
+            this.groupBox4.Location = new System.Drawing.Point(418, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(140, 120);
+            this.groupBox4.Size = new System.Drawing.Size(144, 120);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Выдержка";
@@ -501,7 +513,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.maxExposureTimeTextBox.Location = new System.Drawing.Point(32, 72);
             this.maxExposureTimeTextBox.Name = "maxExposureTimeTextBox";
-            this.maxExposureTimeTextBox.Size = new System.Drawing.Size(103, 20);
+            this.maxExposureTimeTextBox.Size = new System.Drawing.Size(107, 20);
             this.maxExposureTimeTextBox.TabIndex = 2;
             this.maxExposureTimeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ExposureTimeVerify);
             // 
@@ -520,7 +532,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.minExposureTimeTextBox.Location = new System.Drawing.Point(32, 43);
             this.minExposureTimeTextBox.Name = "minExposureTimeTextBox";
-            this.minExposureTimeTextBox.Size = new System.Drawing.Size(103, 20);
+            this.minExposureTimeTextBox.Size = new System.Drawing.Size(107, 20);
             this.minExposureTimeTextBox.TabIndex = 1;
             this.minExposureTimeTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ExposureTimeVerify);
             // 
@@ -541,7 +553,7 @@
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox5.Location = new System.Drawing.Point(3, 129);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(252, 62);
+            this.groupBox5.Size = new System.Drawing.Size(259, 62);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Камера";
@@ -552,7 +564,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CameraTextBox.Location = new System.Drawing.Point(161, 20);
             this.CameraTextBox.Name = "CameraTextBox";
-            this.CameraTextBox.Size = new System.Drawing.Size(85, 20);
+            this.CameraTextBox.Size = new System.Drawing.Size(92, 20);
             this.CameraTextBox.TabIndex = 1;
             // 
             // cameraCheckBox
@@ -570,9 +582,9 @@
             this.settingsPanel.SetColumnSpan(this.groupBox6, 2);
             this.groupBox6.Controls.Add(this.EditCheckBox);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox6.Location = new System.Drawing.Point(261, 129);
+            this.groupBox6.Location = new System.Drawing.Point(268, 129);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(286, 62);
+            this.groupBox6.Size = new System.Drawing.Size(294, 62);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Обработка изображения";
@@ -594,7 +606,7 @@
             this.helpToolStripMenuItem1});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
-            this.mainMenuStrip.Size = new System.Drawing.Size(866, 24);
+            this.mainMenuStrip.Size = new System.Drawing.Size(891, 24);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "menuStrip1";
             // 
@@ -652,21 +664,11 @@
             this.aboutToolStripMenuItem.Text = "О программе";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutButton_Click);
             // 
-            // files
-            // 
-            this.files.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.files.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.files.FormattingEnabled = true;
-            this.files.Location = new System.Drawing.Point(0, 0);
-            this.files.Name = "files";
-            this.files.Size = new System.Drawing.Size(546, 197);
-            this.files.TabIndex = 7;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(866, 509);
+            this.ClientSize = new System.Drawing.Size(891, 509);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.mainMenuStrip);
             this.Name = "MainForm";
