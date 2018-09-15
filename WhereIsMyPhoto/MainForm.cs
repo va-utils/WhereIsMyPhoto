@@ -350,6 +350,17 @@ namespace WhereIsMyPhoto
                     }
                 }
 
+                //---тестируем баланс белого (ручной)
+                if(WhiteBalanceСheckBox.Checked)
+                {
+                    foreach(var i in images)
+                    {
+                        var sdir = i.Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+                        var wb = sdir.GetUInt16(ExifDirectoryBase.TagWhiteBalanceMode);
+                        Debug.Assert(wb == 1, "White Balance Bug: " + i.FileName);
+                    }
+                }
+
                 //---тестируем модель камеры, удалить в релизе
                 if (cameraCheckBox.Checked)
                 {

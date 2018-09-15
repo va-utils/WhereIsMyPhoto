@@ -478,7 +478,7 @@ namespace WhereIsMyPhoto
         {
             Debug.Assert(String.IsNullOrWhiteSpace(path) == false, "Передана пустая  строка в GetAllImages()");
             List<ImageInformation> result = new List<ImageInformation>();
-            string[] dirs = null;
+            string[] dirs =  null;
             string[] files = null;
             try
             {
@@ -498,8 +498,14 @@ namespace WhereIsMyPhoto
                     Trace.WriteLine("Диск " + drive.Name + " был извлечен, или содержит ошибки, мешаюшие поиску");
                     return result;
                 }
+                if (dirs == null || files == null)
+                {
+                    return result;
+                }
             }
-            
+
+
+
 
             ChangeFolder.Invoke(new SearchChangeFolderEventArgs(path, files.Length));
 
@@ -538,7 +544,7 @@ namespace WhereIsMyPhoto
                         IOFatalError?.Invoke(this, new EventArgs());
                         return result;
                     }
-                
+
                 }
                 catch (UnauthorizedAccessException uae)
                 {
@@ -548,7 +554,7 @@ namespace WhereIsMyPhoto
 
             foreach (var d in dirs)
             {
-                if ((windirSkipFlag==false) & (systemDirectoryScan==false))
+                if ((windirSkipFlag==false) && (systemDirectoryScan==false))
                 {
                     if(d.Contains(Environment.GetFolderPath(Environment.SpecialFolder.Windows)))
                     {
