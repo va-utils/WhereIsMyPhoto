@@ -336,9 +336,9 @@ namespace WhereIsMyPhoto
                 searchToolStripMenuItem.Click += StartSearch;
                 searchToolStripMenuItem.Click -= Stop;
 
-
+#if DEBUG
                 #region Tests
-
+                Console.WriteLine("Tests...");
                 //---тестируем поиск по датам, удалить в релизе
                 if (datesCheckBox.Checked)
                 {
@@ -418,6 +418,7 @@ namespace WhereIsMyPhoto
                     }
                 }
                 #endregion
+#endif
 
             }
             else
