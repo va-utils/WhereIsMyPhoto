@@ -124,7 +124,15 @@ namespace WhereIsMyPhoto
                 long numerator = long.Parse(elems[0]);
                 long denominator;
                 if (elems.Length != 1)
+                {
                     denominator = long.Parse(elems[1]);
+                    if (denominator == 0)
+                    {
+                        rational = new Rational();
+                        return false;
+                    }
+                }
+                   
                 else
                     denominator = 1;
 
