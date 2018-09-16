@@ -180,6 +180,7 @@
             this.filesListBox.Size = new System.Drawing.Size(562, 197);
             this.filesListBox.TabIndex = 7;
             this.filesListBox.SelectedIndexChanged += new System.EventHandler(this.files_SelectedIndexChanged);
+            this.filesListBox.DoubleClick += new System.EventHandler(this.files_DoubleClick);
             // 
             // panel2
             // 
