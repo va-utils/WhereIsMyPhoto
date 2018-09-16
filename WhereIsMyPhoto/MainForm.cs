@@ -52,8 +52,8 @@ namespace WhereIsMyPhoto
             
             this.Text = Application.ProductName + " " + Application.ProductVersion;
             endDateTimePicker.Value = endDateTimePicker.MaxDate = DateTime.Now.Date;
-            files.DataSource = imagesBindingSource;
-            files.DisplayMember = "FileName";
+            filesListBox.DataSource = imagesBindingSource;
+            filesListBox.DisplayMember = "FileName";
 
             if(Properties.Settings.Default.isFirstStart)
             {
@@ -67,9 +67,9 @@ namespace WhereIsMyPhoto
 
         private void files_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(files.SelectedIndex!=-1)
+            if(filesListBox.SelectedIndex!=-1)
             {
-                this.imageInformation.Text = Search.GetInformation(images[files.SelectedIndex]);
+                this.imageInformationTextBox.Text = Search.GetInformation(images[filesListBox.SelectedIndex]);
             }
         }
 
@@ -312,6 +312,7 @@ namespace WhereIsMyPhoto
 
 
                 imagesBindingSource.Clear();
+                imageInformationTextBox.Clear();
 
                 //---пуск задачи---//
                 cancelTokenSource = new CancellationTokenSource();
@@ -441,11 +442,11 @@ namespace WhereIsMyPhoto
         private void files_DoubleClick(object sender, EventArgs e)
         {
           //  Debug.Assert(files.SelectedIndex != -1, "Индекс -1");
-            if (files.SelectedIndex == -1) return;
+            if (filesListBox.SelectedIndex == -1) return;
             try
             {
-                Debug.Assert(!(String.IsNullOrWhiteSpace(images[files.SelectedIndex].FileName)),"Пустое имя файла для открытия в просмотрщике");
-                Process.Start(images[files.SelectedIndex].FileName);
+                Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)),"Пустое имя файла для открытия в просмотрщике");
+                Process.Start(images[filesListBox.SelectedIndex].FileName);
             }
             catch(Exception ex)
             {
@@ -472,7 +473,7 @@ namespace WhereIsMyPhoto
 
         private void imageInformation_MouseDown(object sender, MouseEventArgs e)
         {
-            HideCaret(imageInformation.Handle);
+            HideCaret(imageInformationTextBox.Handle);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)

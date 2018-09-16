@@ -500,6 +500,7 @@ namespace WhereIsMyPhoto
                 }
                 if (dirs == null || files == null)
                 {
+                    Trace.WriteLine("Массивы со списком файлов или папок - null");
                     return result;
                 }
             }

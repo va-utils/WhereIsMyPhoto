@@ -33,9 +33,9 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.infoPanel = new System.Windows.Forms.Panel();
-            this.imageInformation = new System.Windows.Forms.TextBox();
+            this.imageInformationTextBox = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.files = new System.Windows.Forms.ListBox();
+            this.filesListBox = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.skipWinDirectoryCheckBox = new System.Windows.Forms.CheckBox();
             this.allDrivesCheckBox = new System.Windows.Forms.CheckBox();
@@ -139,47 +139,47 @@
             // 
             this.infoPanel.AutoScroll = true;
             this.infoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.infoPanel.Controls.Add(this.imageInformation);
+            this.infoPanel.Controls.Add(this.imageInformationTextBox);
             this.infoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.infoPanel.Location = new System.Drawing.Point(573, 263);
             this.infoPanel.Name = "infoPanel";
             this.infoPanel.Size = new System.Drawing.Size(315, 199);
             this.infoPanel.TabIndex = 1;
             // 
-            // imageInformation
+            // imageInformationTextBox
             // 
-            this.imageInformation.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.imageInformation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageInformation.Location = new System.Drawing.Point(0, 0);
-            this.imageInformation.Multiline = true;
-            this.imageInformation.Name = "imageInformation";
-            this.imageInformation.ReadOnly = true;
-            this.imageInformation.Size = new System.Drawing.Size(313, 197);
-            this.imageInformation.TabIndex = 0;
-            this.imageInformation.TabStop = false;
-            this.imageInformation.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageInformation_MouseDown);
+            this.imageInformationTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.imageInformationTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageInformationTextBox.Location = new System.Drawing.Point(0, 0);
+            this.imageInformationTextBox.Multiline = true;
+            this.imageInformationTextBox.Name = "imageInformationTextBox";
+            this.imageInformationTextBox.ReadOnly = true;
+            this.imageInformationTextBox.Size = new System.Drawing.Size(313, 197);
+            this.imageInformationTextBox.TabIndex = 0;
+            this.imageInformationTextBox.TabStop = false;
+            this.imageInformationTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.imageInformation_MouseDown);
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.files);
+            this.panel1.Controls.Add(this.filesListBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 263);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(564, 199);
             this.panel1.TabIndex = 5;
             // 
-            // files
+            // filesListBox
             // 
-            this.files.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.files.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.files.FormattingEnabled = true;
-            this.files.HorizontalScrollbar = true;
-            this.files.Location = new System.Drawing.Point(0, 0);
-            this.files.Name = "files";
-            this.files.Size = new System.Drawing.Size(562, 197);
-            this.files.TabIndex = 7;
-            this.files.SelectedIndexChanged += new System.EventHandler(this.files_SelectedIndexChanged);
+            this.filesListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.filesListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.filesListBox.FormattingEnabled = true;
+            this.filesListBox.HorizontalScrollbar = true;
+            this.filesListBox.Location = new System.Drawing.Point(0, 0);
+            this.filesListBox.Name = "filesListBox";
+            this.filesListBox.Size = new System.Drawing.Size(562, 197);
+            this.filesListBox.TabIndex = 7;
+            this.filesListBox.SelectedIndexChanged += new System.EventHandler(this.files_SelectedIndexChanged);
             // 
             // panel2
             // 
@@ -289,7 +289,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 70);
+            this.label2.Location = new System.Drawing.Point(3, 72);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(24, 13);
             this.label2.TabIndex = 4;
@@ -440,7 +440,7 @@
             // 
             this.maxISOTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.maxISOTextBox.Location = new System.Drawing.Point(27, 69);
+            this.maxISOTextBox.Location = new System.Drawing.Point(27, 70);
             this.maxISOTextBox.Name = "maxISOTextBox";
             this.maxISOTextBox.Size = new System.Drawing.Size(107, 20);
             this.maxISOTextBox.TabIndex = 2;
@@ -468,7 +468,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 44);
+            this.label3.Location = new System.Drawing.Point(3, 47);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(17, 13);
             this.label3.TabIndex = 4;
@@ -512,7 +512,7 @@
             // 
             this.maxExposureTimeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.maxExposureTimeTextBox.Location = new System.Drawing.Point(32, 72);
+            this.maxExposureTimeTextBox.Location = new System.Drawing.Point(27, 70);
             this.maxExposureTimeTextBox.Name = "maxExposureTimeTextBox";
             this.maxExposureTimeTextBox.Size = new System.Drawing.Size(107, 20);
             this.maxExposureTimeTextBox.TabIndex = 2;
@@ -521,7 +521,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 44);
+            this.label6.Location = new System.Drawing.Point(3, 47);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(17, 13);
             this.label6.TabIndex = 6;
@@ -531,7 +531,7 @@
             // 
             this.minExposureTimeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.minExposureTimeTextBox.Location = new System.Drawing.Point(32, 43);
+            this.minExposureTimeTextBox.Location = new System.Drawing.Point(27, 43);
             this.minExposureTimeTextBox.Name = "minExposureTimeTextBox";
             this.minExposureTimeTextBox.Size = new System.Drawing.Size(107, 20);
             this.minExposureTimeTextBox.TabIndex = 1;
@@ -674,7 +674,7 @@
             this.Controls.Add(this.mainMenuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "...";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -737,7 +737,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox minExposureTimeTextBox;
         private System.Windows.Forms.CheckBox ExposureTimeCheckBox;
-        private System.Windows.Forms.TextBox imageInformation;
+        private System.Windows.Forms.TextBox imageInformationTextBox;
         private System.Windows.Forms.TextBox maxISOTextBox;
         private System.Windows.Forms.TextBox minISOTextBox;
         private System.Windows.Forms.CheckBox gpsCheckBox;
@@ -759,7 +759,7 @@
         private System.Windows.Forms.ComboBox exposureProgramComboBox;
         private System.Windows.Forms.CheckBox ExposureProgramCheckBox;
         private System.Windows.Forms.CheckBox skipWinDirectoryCheckBox;
-        private System.Windows.Forms.ListBox files;
+        private System.Windows.Forms.ListBox filesListBox;
     }
 }
 
