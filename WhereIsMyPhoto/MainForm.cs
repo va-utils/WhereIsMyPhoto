@@ -98,7 +98,7 @@ namespace WhereIsMyPhoto
                 }
             }
             else
-            {
+            { 
                 imagesBindingSource.Add(fnfea.file);
             }
 
@@ -336,6 +336,8 @@ namespace WhereIsMyPhoto
                 searchToolStripMenuItem.Text = "Начать поиск";
                 searchToolStripMenuItem.Click += StartSearch;
                 searchToolStripMenuItem.Click -= Stop;
+
+
 
 #if DEBUG
                 #region Tests

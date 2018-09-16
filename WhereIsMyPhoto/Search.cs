@@ -477,6 +477,7 @@ namespace WhereIsMyPhoto
         private List<ImageInformation> GetImagesUponMyCriteria(string path, ISO iso, Date date, ExposureTime et, ExposureProgram ep, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
         {
             Debug.Assert(String.IsNullOrWhiteSpace(path) == false, "Передана пустая  строка в GetAllImages()");
+
             List<ImageInformation> result = new List<ImageInformation>();
             string[] dirs =  null;
             string[] files = null;
@@ -509,6 +510,7 @@ namespace WhereIsMyPhoto
 
 
             ChangeFolder.Invoke(new SearchChangeFolderEventArgs(path, files.Length));
+            
 
             foreach (var f in files)
             {
