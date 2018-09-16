@@ -327,7 +327,7 @@
             // datesCheckBox
             // 
             this.datesCheckBox.AutoSize = true;
-            this.datesCheckBox.Location = new System.Drawing.Point(7, 20);
+            this.datesCheckBox.Location = new System.Drawing.Point(5, 20);
             this.datesCheckBox.Name = "datesCheckBox";
             this.datesCheckBox.Size = new System.Drawing.Size(133, 17);
             this.datesCheckBox.TabIndex = 0;
@@ -384,7 +384,7 @@
             // ExposureProgramCheckBox
             // 
             this.ExposureProgramCheckBox.AutoSize = true;
-            this.ExposureProgramCheckBox.Location = new System.Drawing.Point(7, 89);
+            this.ExposureProgramCheckBox.Location = new System.Drawing.Point(5, 89);
             this.ExposureProgramCheckBox.Name = "ExposureProgramCheckBox";
             this.ExposureProgramCheckBox.Size = new System.Drawing.Size(160, 17);
             this.ExposureProgramCheckBox.TabIndex = 3;
@@ -394,7 +394,7 @@
             // flashOnCheckBox
             // 
             this.flashOnCheckBox.AutoSize = true;
-            this.flashOnCheckBox.Location = new System.Drawing.Point(7, 42);
+            this.flashOnCheckBox.Location = new System.Drawing.Point(5, 42);
             this.flashOnCheckBox.Name = "flashOnCheckBox";
             this.flashOnCheckBox.Size = new System.Drawing.Size(94, 17);
             this.flashOnCheckBox.TabIndex = 1;
@@ -404,7 +404,7 @@
             // WhiteBalanceСheckBox
             // 
             this.WhiteBalanceСheckBox.AutoSize = true;
-            this.WhiteBalanceСheckBox.Location = new System.Drawing.Point(7, 20);
+            this.WhiteBalanceСheckBox.Location = new System.Drawing.Point(5, 20);
             this.WhiteBalanceСheckBox.Name = "WhiteBalanceСheckBox";
             this.WhiteBalanceСheckBox.Size = new System.Drawing.Size(138, 17);
             this.WhiteBalanceСheckBox.TabIndex = 0;
@@ -414,7 +414,7 @@
             // gpsCheckBox
             // 
             this.gpsCheckBox.AutoSize = true;
-            this.gpsCheckBox.Location = new System.Drawing.Point(7, 65);
+            this.gpsCheckBox.Location = new System.Drawing.Point(5, 65);
             this.gpsCheckBox.Name = "gpsCheckBox";
             this.gpsCheckBox.Size = new System.Drawing.Size(107, 17);
             this.gpsCheckBox.TabIndex = 2;
@@ -477,7 +477,7 @@
             // ISOCheckBox
             // 
             this.ISOCheckBox.AutoSize = true;
-            this.ISOCheckBox.Location = new System.Drawing.Point(7, 20);
+            this.ISOCheckBox.Location = new System.Drawing.Point(5, 20);
             this.ISOCheckBox.Name = "ISOCheckBox";
             this.ISOCheckBox.Size = new System.Drawing.Size(61, 17);
             this.ISOCheckBox.TabIndex = 0;
@@ -540,7 +540,7 @@
             // ExposureTimeCheckBox
             // 
             this.ExposureTimeCheckBox.AutoSize = true;
-            this.ExposureTimeCheckBox.Location = new System.Drawing.Point(7, 20);
+            this.ExposureTimeCheckBox.Location = new System.Drawing.Point(5, 20);
             this.ExposureTimeCheckBox.Name = "ExposureTimeCheckBox";
             this.ExposureTimeCheckBox.Size = new System.Drawing.Size(98, 17);
             this.ExposureTimeCheckBox.TabIndex = 0;
@@ -571,7 +571,7 @@
             // cameraCheckBox
             // 
             this.cameraCheckBox.AutoSize = true;
-            this.cameraCheckBox.Location = new System.Drawing.Point(7, 21);
+            this.cameraCheckBox.Location = new System.Drawing.Point(5, 21);
             this.cameraCheckBox.Name = "cameraCheckBox";
             this.cameraCheckBox.Size = new System.Drawing.Size(151, 17);
             this.cameraCheckBox.TabIndex = 0;
@@ -593,7 +593,7 @@
             // EditCheckBox
             // 
             this.EditCheckBox.AutoSize = true;
-            this.EditCheckBox.Location = new System.Drawing.Point(7, 21);
+            this.EditCheckBox.Location = new System.Drawing.Point(5, 21);
             this.EditCheckBox.Name = "EditCheckBox";
             this.EditCheckBox.Size = new System.Drawing.Size(205, 17);
             this.EditCheckBox.TabIndex = 0;

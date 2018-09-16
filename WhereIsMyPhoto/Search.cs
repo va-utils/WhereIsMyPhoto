@@ -443,8 +443,8 @@ namespace WhereIsMyPhoto
                         return false;
 
                     string softWare = Ifd0Directory?.GetDescription(ExifDirectoryBase.TagSoftware);
-                    string[] soft = { "gimp", "photoshop", "paint" };
-                    if(softWare==null)
+                    string[] soft = { "gimp", "photoshop", "lightroom", "luminar", "affinity", "paint", "krita","pinta","picasa","movavi","pixbuilder"  };
+                    if (softWare==null)
                     {
                         return false;
                     }
