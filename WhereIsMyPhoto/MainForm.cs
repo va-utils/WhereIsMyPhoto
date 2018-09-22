@@ -77,7 +77,7 @@ namespace WhereIsMyPhoto
         {
             if (statusStrip.InvokeRequired)
             {
-                statusStrip.BeginInvoke(new Action<SearchChangeFolderEventArgs>(ChangeStatus), fcfea);
+                statusStrip.Invoke(new Action<SearchChangeFolderEventArgs>(ChangeStatus), fcfea);
             }
             else
             {
@@ -89,7 +89,7 @@ namespace WhereIsMyPhoto
         {
             if (InvokeRequired)
             {
-                BeginInvoke(new Action<SearchNewFileEventArgs>(newFileFinded), fnfea);
+                Invoke(new Action<SearchNewFileEventArgs>(newFileFinded), fnfea);
             }
             else
             {
