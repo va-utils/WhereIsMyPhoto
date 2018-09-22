@@ -51,6 +51,8 @@
             this.datesCheckBox = new System.Windows.Forms.CheckBox();
             this.startButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.orientationComboBox = new System.Windows.Forms.ComboBox();
+            this.orientationСheckBox = new System.Windows.Forms.CheckBox();
             this.exposureProgramComboBox = new System.Windows.Forms.ComboBox();
             this.ExposureProgramCheckBox = new System.Windows.Forms.CheckBox();
             this.flashOnCheckBox = new System.Windows.Forms.CheckBox();
@@ -267,8 +269,8 @@
             this.settingsPanel.Location = new System.Drawing.Point(3, 63);
             this.settingsPanel.Name = "settingsPanel";
             this.settingsPanel.RowCount = 2;
-            this.settingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65F));
-            this.settingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
+            this.settingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.settingsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.settingsPanel.Size = new System.Drawing.Size(885, 194);
             this.settingsPanel.TabIndex = 4;
             // 
@@ -282,7 +284,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(259, 120);
+            this.groupBox1.Size = new System.Drawing.Size(259, 139);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Дата фотосъемки";
@@ -338,10 +340,10 @@
             // startButton
             // 
             this.startButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.startButton.Location = new System.Drawing.Point(568, 133);
+            this.startButton.Location = new System.Drawing.Point(568, 152);
             this.startButton.Margin = new System.Windows.Forms.Padding(3, 7, 3, 3);
             this.startButton.Name = "startButton";
-            this.startButton.Size = new System.Drawing.Size(314, 58);
+            this.startButton.Size = new System.Drawing.Size(314, 39);
             this.startButton.TabIndex = 6;
             this.startButton.Text = "Начать поиск";
             this.startButton.UseVisualStyleBackColor = true;
@@ -349,6 +351,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.orientationComboBox);
+            this.groupBox2.Controls.Add(this.orientationСheckBox);
             this.groupBox2.Controls.Add(this.exposureProgramComboBox);
             this.groupBox2.Controls.Add(this.ExposureProgramCheckBox);
             this.groupBox2.Controls.Add(this.flashOnCheckBox);
@@ -357,10 +361,34 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(568, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(314, 120);
+            this.groupBox2.Size = new System.Drawing.Size(314, 139);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Параметры съемки";
+            // 
+            // orientationComboBox
+            // 
+            this.orientationComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.orientationComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.orientationComboBox.FormattingEnabled = true;
+            this.orientationComboBox.Items.AddRange(new object[] {
+            "Горизонтальная",
+            "Вертикальная"});
+            this.orientationComboBox.Location = new System.Drawing.Point(167, 109);
+            this.orientationComboBox.Name = "orientationComboBox";
+            this.orientationComboBox.Size = new System.Drawing.Size(141, 21);
+            this.orientationComboBox.TabIndex = 6;
+            // 
+            // orientationСheckBox
+            // 
+            this.orientationСheckBox.AutoSize = true;
+            this.orientationСheckBox.Location = new System.Drawing.Point(5, 108);
+            this.orientationСheckBox.Name = "orientationСheckBox";
+            this.orientationСheckBox.Size = new System.Drawing.Size(90, 17);
+            this.orientationСheckBox.TabIndex = 5;
+            this.orientationСheckBox.Text = "Ориентация:";
+            this.orientationСheckBox.UseVisualStyleBackColor = true;
             // 
             // exposureProgramComboBox
             // 
@@ -377,7 +405,7 @@
             "Спорт/Скорость",
             "Портретный режим",
             "Пейзажный режим"});
-            this.exposureProgramComboBox.Location = new System.Drawing.Point(167, 87);
+            this.exposureProgramComboBox.Location = new System.Drawing.Point(167, 83);
             this.exposureProgramComboBox.Name = "exposureProgramComboBox";
             this.exposureProgramComboBox.Size = new System.Drawing.Size(141, 21);
             this.exposureProgramComboBox.TabIndex = 4;
@@ -385,7 +413,7 @@
             // ExposureProgramCheckBox
             // 
             this.ExposureProgramCheckBox.AutoSize = true;
-            this.ExposureProgramCheckBox.Location = new System.Drawing.Point(5, 89);
+            this.ExposureProgramCheckBox.Location = new System.Drawing.Point(5, 86);
             this.ExposureProgramCheckBox.Name = "ExposureProgramCheckBox";
             this.ExposureProgramCheckBox.Size = new System.Drawing.Size(160, 17);
             this.ExposureProgramCheckBox.TabIndex = 3;
@@ -415,7 +443,7 @@
             // gpsCheckBox
             // 
             this.gpsCheckBox.AutoSize = true;
-            this.gpsCheckBox.Location = new System.Drawing.Point(5, 65);
+            this.gpsCheckBox.Location = new System.Drawing.Point(5, 64);
             this.gpsCheckBox.Name = "gpsCheckBox";
             this.gpsCheckBox.Size = new System.Drawing.Size(107, 17);
             this.gpsCheckBox.TabIndex = 2;
@@ -432,7 +460,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(268, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(144, 120);
+            this.groupBox3.Size = new System.Drawing.Size(144, 139);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "ISO";
@@ -495,7 +523,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(418, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(144, 120);
+            this.groupBox4.Size = new System.Drawing.Size(144, 139);
             this.groupBox4.TabIndex = 2;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Выдержка";
@@ -553,9 +581,9 @@
             this.groupBox5.Controls.Add(this.CameraTextBox);
             this.groupBox5.Controls.Add(this.cameraCheckBox);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Location = new System.Drawing.Point(3, 129);
+            this.groupBox5.Location = new System.Drawing.Point(3, 148);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(259, 62);
+            this.groupBox5.Size = new System.Drawing.Size(259, 43);
             this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Камера";
@@ -564,7 +592,7 @@
             // 
             this.CameraTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CameraTextBox.Location = new System.Drawing.Point(161, 20);
+            this.CameraTextBox.Location = new System.Drawing.Point(161, 18);
             this.CameraTextBox.Name = "CameraTextBox";
             this.CameraTextBox.Size = new System.Drawing.Size(92, 20);
             this.CameraTextBox.TabIndex = 1;
@@ -584,9 +612,9 @@
             this.settingsPanel.SetColumnSpan(this.groupBox6, 2);
             this.groupBox6.Controls.Add(this.EditCheckBox);
             this.groupBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox6.Location = new System.Drawing.Point(268, 129);
+            this.groupBox6.Location = new System.Drawing.Point(268, 148);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(294, 62);
+            this.groupBox6.Size = new System.Drawing.Size(294, 43);
             this.groupBox6.TabIndex = 5;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Обработка изображения";
@@ -762,6 +790,8 @@
         private System.Windows.Forms.CheckBox ExposureProgramCheckBox;
         private System.Windows.Forms.CheckBox skipWinDirectoryCheckBox;
         private System.Windows.Forms.ListBox filesListBox;
+        private System.Windows.Forms.ComboBox orientationComboBox;
+        private System.Windows.Forms.CheckBox orientationСheckBox;
     }
 }
 

@@ -29,13 +29,13 @@
         {
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.showHelpButton = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.checkNewVersionButton = new System.Windows.Forms.Button();
             this.labelProductName = new System.Windows.Forms.Label();
             this.labelVersion = new System.Windows.Forms.Label();
             this.labelCopyright = new System.Windows.Forms.Label();
             this.okButton = new System.Windows.Forms.Button();
             this.textBoxDescription = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.webSiteButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,13 +44,13 @@
             this.tableLayoutPanel.ColumnCount = 1;
             this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel.Controls.Add(this.showHelpButton, 0, 5);
-            this.tableLayoutPanel.Controls.Add(this.button2, 0, 4);
+            this.tableLayoutPanel.Controls.Add(this.checkNewVersionButton, 0, 4);
             this.tableLayoutPanel.Controls.Add(this.labelProductName, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.labelVersion, 0, 1);
             this.tableLayoutPanel.Controls.Add(this.labelCopyright, 0, 2);
             this.tableLayoutPanel.Controls.Add(this.okButton, 0, 7);
             this.tableLayoutPanel.Controls.Add(this.textBoxDescription, 0, 6);
-            this.tableLayoutPanel.Controls.Add(this.button1, 0, 3);
+            this.tableLayoutPanel.Controls.Add(this.webSiteButton, 0, 3);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(9, 9);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
@@ -77,15 +77,16 @@
             this.showHelpButton.UseVisualStyleBackColor = true;
             this.showHelpButton.Click += new System.EventHandler(this.ShowHelpButton_Click);
             // 
-            // button2
+            // checkNewVersionButton
             // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Location = new System.Drawing.Point(3, 123);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(411, 24);
-            this.button2.TabIndex = 26;
-            this.button2.Text = "Проверить новую версию";
-            this.button2.UseVisualStyleBackColor = true;
+            this.checkNewVersionButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.checkNewVersionButton.Location = new System.Drawing.Point(3, 123);
+            this.checkNewVersionButton.Name = "checkNewVersionButton";
+            this.checkNewVersionButton.Size = new System.Drawing.Size(411, 24);
+            this.checkNewVersionButton.TabIndex = 26;
+            this.checkNewVersionButton.Text = "Проверить новую версию";
+            this.checkNewVersionButton.UseVisualStyleBackColor = true;
+            this.checkNewVersionButton.Click += new System.EventHandler(this.CheckNewVersionButton_click);
             // 
             // labelProductName
             // 
@@ -132,7 +133,7 @@
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 24;
             this.okButton.Text = "&ОК";
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
+      //      this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // textBoxDescription
             // 
@@ -147,16 +148,18 @@
             this.textBoxDescription.TabIndex = 23;
             this.textBoxDescription.TabStop = false;
             this.textBoxDescription.Text = "Описание";
+   //         this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
             // 
-            // button1
+            // webSiteButton
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button1.Location = new System.Drawing.Point(3, 93);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(411, 24);
-            this.button1.TabIndex = 25;
-            this.button1.Text = "Перейти на страницу с описанием";
-            this.button1.UseVisualStyleBackColor = true;
+            this.webSiteButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webSiteButton.Location = new System.Drawing.Point(3, 93);
+            this.webSiteButton.Name = "webSiteButton";
+            this.webSiteButton.Size = new System.Drawing.Size(411, 24);
+            this.webSiteButton.TabIndex = 25;
+            this.webSiteButton.Text = "Перейти на страницу с описанием";
+            this.webSiteButton.UseVisualStyleBackColor = true;
+            this.webSiteButton.Click += new System.EventHandler(this.webSiteButton_Click);
             // 
             // AboutBox
             // 
@@ -189,7 +192,7 @@
         private System.Windows.Forms.TextBox textBoxDescription;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Button showHelpButton;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button checkNewVersionButton;
+        private System.Windows.Forms.Button webSiteButton;
     }
 }

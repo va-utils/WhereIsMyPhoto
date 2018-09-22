@@ -162,6 +162,7 @@ namespace WhereIsMyPhoto
                 Date date = null;
                 ISO iso = null;
                 ExposureProgram ep = ExposureProgram.Any;
+                Orientation or = Orientation.Any;
                 ExposureTime et = null;
                 string camName = null;
                 bool isManualWhiteBalance = false;
@@ -287,6 +288,25 @@ namespace WhereIsMyPhoto
                     }
                     ep = (ExposureProgram)exposureProgramComboBox.SelectedIndex+1;
                 }
+
+                if(orientationСheckBox.Checked)
+                {
+                    int sel = orientationComboBox.SelectedIndex;
+                    if(sel==-1)
+                    {
+                        MessageBox.Show("Неверно выставлены настройки поиска по ориентации. Пожалуйста исправьте.");
+                        return;
+                    }
+                    switch(sel)
+                    {
+                        case 0:
+                            or = Orientation.Horizonatal;
+                            break;
+                        case 1:
+                            or = Orientation.Vertical;
+                            break;
+                    }
+                }
                 
                 if(allDrivesCheckBox.Checked)
                 {
@@ -320,7 +340,7 @@ namespace WhereIsMyPhoto
                 
 
                 isWorking = true;
-                await finder.GetImagesWithMyParams(iso, date, et, ep, camName, isManualWhiteBalance, isFlashOn, isGPS, isEdit, token);
+                await finder.GetImagesWithMyParams(iso, date, et, ep, or, camName, isManualWhiteBalance, isFlashOn, isGPS, isEdit, token);
                 isWorking = false;
 
                // MessageBox.Show(searchSettings.ToString() + "\nНайдено изображений: " + imagesBindingSource.Count);
@@ -431,6 +451,27 @@ namespace WhereIsMyPhoto
                         Debug.Assert(eProgram == (int)exposureProgramComboBox.SelectedIndex+1, "Exposure Program Bug: " + i.FileName + " EP Value: " + eProgram);
                     }
                 }
+
+                //тестируем ориентацию
+                if (ExposureProgramCheckBox.Checked)
+                {
+                    foreach (var i in images)
+                    {
+                        var sdir = ((ImageInformation)i).Directories.OfType<ExifIfd0Directory>().FirstOrDefault();
+                        ushort orient = sdir.GetUInt16(ExifDirectoryBase.TagOrientation);
+
+                        if (or == Orientation.Horizonatal)
+                        {
+                            Debug.Assert(orient <= 4, "Orientation bug");
+                        }
+                        if (or == Orientation.Vertical)
+                        {
+                            Debug.Assert(orient > 4, "Orientation bug");
+                        }
+                    }
+                }
+
+
                 #endregion
 #endif
 

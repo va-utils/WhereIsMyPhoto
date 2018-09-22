@@ -17,6 +17,13 @@ namespace WhereIsMyPhoto
         Landspace,
     }
 
+    public enum Orientation
+    {
+        Any,
+        Horizonatal,
+        Vertical,
+    }
+
     public class SearchChangeFolderEventArgs : EventArgs
     {
         public string FolderName { get; private set; }

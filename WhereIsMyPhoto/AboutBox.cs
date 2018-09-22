@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -112,14 +115,34 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
         }
         #endregion
 
-        private void okButton_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void ShowHelpButton_Click(object sender, EventArgs e)
         {
             HelpAndInformation.ShowHelpFile();
+        }
+
+        private void CheckNewVersionButton_click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("https://github.com/va-utils/WhereIsMyPhoto/releases");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void webSiteButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start("https://github.com/va-utils/WhereIsMyPhoto/wiki");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
