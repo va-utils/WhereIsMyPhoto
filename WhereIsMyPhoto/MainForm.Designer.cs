@@ -39,7 +39,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.skipWinDirectoryCheckBox = new System.Windows.Forms.CheckBox();
             this.allDrivesCheckBox = new System.Windows.Forms.CheckBox();
-            this.aboutButton = new System.Windows.Forms.Button();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.browseButton = new System.Windows.Forms.Button();
             this.settingsPanel = new System.Windows.Forms.TableLayoutPanel();
@@ -189,7 +188,6 @@
             this.tableLayoutPanel1.SetColumnSpan(this.panel2, 2);
             this.panel2.Controls.Add(this.skipWinDirectoryCheckBox);
             this.panel2.Controls.Add(this.allDrivesCheckBox);
-            this.panel2.Controls.Add(this.aboutButton);
             this.panel2.Controls.Add(this.pathTextBox);
             this.panel2.Controls.Add(this.browseButton);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -219,17 +217,6 @@
             this.allDrivesCheckBox.UseVisualStyleBackColor = true;
             this.allDrivesCheckBox.CheckedChanged += new System.EventHandler(this.allDrivesCheckBox_CheckedChanged);
             // 
-            // aboutButton
-            // 
-            this.aboutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.aboutButton.Location = new System.Drawing.Point(860, 3);
-            this.aboutButton.Name = "aboutButton";
-            this.aboutButton.Size = new System.Drawing.Size(22, 23);
-            this.aboutButton.TabIndex = 2;
-            this.aboutButton.Text = "?";
-            this.aboutButton.UseVisualStyleBackColor = true;
-            this.aboutButton.Click += new System.EventHandler(this.aboutButton_Click);
-            // 
             // pathTextBox
             // 
             this.pathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -244,7 +231,7 @@
             this.browseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.browseButton.Location = new System.Drawing.Point(797, 3);
             this.browseButton.Name = "browseButton";
-            this.browseButton.Size = new System.Drawing.Size(57, 23);
+            this.browseButton.Size = new System.Drawing.Size(79, 23);
             this.browseButton.TabIndex = 1;
             this.browseButton.Text = "Обзор...";
             this.browseButton.UseVisualStyleBackColor = true;
@@ -774,7 +761,6 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.CheckBox cameraCheckBox;
         private System.Windows.Forms.TextBox CameraTextBox;
-        private System.Windows.Forms.Button aboutButton;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckBox EditCheckBox;
         private System.Windows.Forms.CheckBox allDrivesCheckBox;

@@ -16,7 +16,8 @@ namespace WhereIsMyPhoto
     {
         public AboutBox()
         {
-            string mit = @"Спасибо за вдохновение любимой жене Дарье :)
+            string mit =
+                @"Спасибо за вдохновение любимой жене Дарье :)
 Помощь в отладке: Попов Н.А., Терехова В.Д., MrStalker.
 Если Вы нашли какую-то проблему, сообщите пожалуйста на viktor70@protonmail.com
 Copyright (c) 2018 Vyalichkin V.A.

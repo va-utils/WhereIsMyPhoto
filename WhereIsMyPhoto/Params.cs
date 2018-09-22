@@ -35,7 +35,7 @@ namespace WhereIsMyPhoto
         }
     }
 
-    public delegate void SearchChangeFolderEventHandler(SearchChangeFolderEventArgs f,bool flag = false);
+    public delegate void SearchChangeFolderEventHandler(SearchChangeFolderEventArgs f);
 
     public class SearchNewFileEventArgs : EventArgs
     {
@@ -46,7 +46,7 @@ namespace WhereIsMyPhoto
         }
     }
 
-    public delegate void SearchNewFileEventHandler(SearchNewFileEventArgs f, bool flag = false);
+    public delegate void SearchNewFileEventHandler(SearchNewFileEventArgs f);
 
     public class ImageInformation
     {

@@ -88,6 +88,7 @@ namespace WhereIsMyPhoto
 
             //ISO
             var subdir = img.Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+
             if(subdir!=null)
             {
                 //---------------------------------------------------------------------------------------------------

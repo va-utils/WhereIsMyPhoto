@@ -73,14 +73,11 @@ namespace WhereIsMyPhoto
             }
         }
 
-        private void ChangeStatus(SearchChangeFolderEventArgs fcfea, bool flag = false)
+        private void ChangeStatus(SearchChangeFolderEventArgs fcfea)
         {
-            if(flag==false)
+            if (statusStrip.InvokeRequired)
             {
-                if (statusStrip.InvokeRequired)
-                {
-                    statusStrip.Invoke(new Action<SearchChangeFolderEventArgs, bool>((fc, fl) => ChangeStatus(fc,fl)),fcfea,true);
-                }
+                statusStrip.BeginInvoke(new Action<SearchChangeFolderEventArgs>(ChangeStatus), fcfea);
             }
             else
             {
@@ -88,20 +85,16 @@ namespace WhereIsMyPhoto
             }
         }
 
-        private void newFileFinded(SearchNewFileEventArgs fnfea,bool flag = false)
+        private void newFileFinded(SearchNewFileEventArgs fnfea)
         {
-            if (flag == false)
+            if (InvokeRequired)
             {
-                if (InvokeRequired)
-                {
-                    Invoke(new Action<SearchNewFileEventArgs, bool>((fc, fl) => newFileFinded(fc, fl)), fnfea, true);
-                }
+                BeginInvoke(new Action<SearchNewFileEventArgs>(newFileFinded), fnfea);
             }
             else
-            { 
+            {
                 imagesBindingSource.Add(fnfea.file);
             }
-
         }
 
         private void browseButton_Click(object sender, EventArgs e)
@@ -136,8 +129,6 @@ namespace WhereIsMyPhoto
                 else
                     denominator = 1;
 
-
-                
                 rational = new Rational(numerator, denominator);
                 return true;
             }
@@ -169,9 +160,11 @@ namespace WhereIsMyPhoto
                 bool isFlashOn = false;
                 bool isGPS = false;
                 bool isEdit = false;
+                //---------------------------------
 
 
                 searchSettings.Clear();
+
                 //------ДАТА
                 if (datesCheckBox.Checked == true)
                 {
