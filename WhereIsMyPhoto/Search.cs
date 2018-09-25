@@ -433,7 +433,7 @@ namespace WhereIsMyPhoto
 
             if (date != null) //дата
             {
-                Debug.Assert(date.minDT < date.maxDT, "Конечная дата раньше начальной");
+                Debug.Assert(date.minDT <= date.maxDT, "Конечная дата раньше начальной");
 
                 try
                 {
@@ -441,6 +441,7 @@ namespace WhereIsMyPhoto
                         return false;
 
                     DateTime dDate = subdir.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal);
+                    dDate = dDate.Date;
                     if (!((dDate >= date.minDT) && (dDate <= date.maxDT)))
                     {
                         return false;

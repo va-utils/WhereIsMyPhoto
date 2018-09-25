@@ -52,6 +52,7 @@ namespace WhereIsMyPhoto
             
             this.Text = Application.ProductName + " " + Application.ProductVersion;
             endDateTimePicker.Value = endDateTimePicker.MaxDate = DateTime.Now.Date;
+
             filesListBox.DataSource = imagesBindingSource;
             filesListBox.DisplayMember = "FileName";
 
@@ -174,7 +175,7 @@ namespace WhereIsMyPhoto
                         return;
                     }
                     searchSettings.AppendLine("Поиск по датам: " + startDateTimePicker.Value.ToShortDateString() + " - " + endDateTimePicker.Value.ToShortDateString());
-                    date = new Date(startDateTimePicker.Value, endDateTimePicker.Value);
+                    date = new Date(startDateTimePicker.Value.Date, endDateTimePicker.Value.Date);
                 }
                 //-----ISO
                 if(ISOCheckBox.Checked)
