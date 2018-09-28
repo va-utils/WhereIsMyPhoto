@@ -19,6 +19,11 @@ namespace WhereIsMyPhoto
         [System.Runtime.InteropServices.DllImport("user32")]
         private static extern bool HideCaret(IntPtr hWnd);
 
+        
+        
+        
+
+
         bool isWorking;
 
         StringBuilder searchSettings = new StringBuilder(200);
@@ -30,6 +35,33 @@ namespace WhereIsMyPhoto
         BindingSource imagesBindingSource;
         Search finder;
        // System.IO.FileStream forTraceFileStream;
+
+
+
+        private void OpenFileMenu_Click(object sender, EventArgs e)
+        {
+            OpenImage();
+        }
+
+        private void OpenDirectoryMenu_Click(object sender, EventArgs e)
+        {
+            if (filesListBox.SelectedIndex == -1) return;
+            try
+            {
+                Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)), "Пустое имя файла для открытия в просмотрщике");
+                string directoryPath = System.IO.Path.GetDirectoryName(images[filesListBox.SelectedIndex].FileName);
+                Process.Start(directoryPath);
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
+        }
+
+        private void OpenMapMenu_Click(object sender, EventArgs e)
+        {
+
+        }
 
         public MainForm()
         {
@@ -49,7 +81,9 @@ namespace WhereIsMyPhoto
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
+            contextMenuStrip.Items.Insert(0, new ToolStripLabel("..."));
+            contextMenuStrip.Items[0].ForeColor = Color.DarkBlue;
+
             this.Text = Application.ProductName + " " + Application.ProductVersion;
             endDateTimePicker.Value = endDateTimePicker.MaxDate = DateTime.Now.Date;
 
@@ -61,9 +95,6 @@ namespace WhereIsMyPhoto
                 //вывести справку
             }
 
-
-            
-            
         }
 
         private void files_SelectedIndexChanged(object sender, EventArgs e)
@@ -478,18 +509,22 @@ namespace WhereIsMyPhoto
 
         private void files_DoubleClick(object sender, EventArgs e)
         {
-          //  Debug.Assert(files.SelectedIndex != -1, "Индекс -1");
+            //  Debug.Assert(files.SelectedIndex != -1, "Индекс -1");
+            OpenImage();
+        }
+
+        private void OpenImage()
+        {
             if (filesListBox.SelectedIndex == -1) return;
             try
             {
-                Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)),"Пустое имя файла для открытия в просмотрщике");
+                Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)), "Пустое имя файла для открытия в просмотрщике");
                 Process.Start(images[filesListBox.SelectedIndex].FileName);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Trace.WriteLine(ex.Message);
             }
-            
         }
 
         private void ISOVerify(object sender, KeyPressEventArgs e) //проверка для поля ввода ISO
@@ -596,6 +631,26 @@ namespace WhereIsMyPhoto
         private void showHelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
            HelpAndInformation.ShowHelpFile();
+        }
+
+        private void filesListBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int i = filesListBox.IndexFromPoint(e.X, e.Y);
+                Console.WriteLine(i);
+                if (i != -1)
+                {
+                    filesListBox.SelectedIndex = i;
+                    contextMenuStrip.Items[0].Text = System.IO.Path.GetFileName(images[filesListBox.SelectedIndex].FileName);
+                    contextMenuStrip.Show(MousePosition);
+                }
+            }
+        }
+
+        private void statusStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
         }
     }
 }

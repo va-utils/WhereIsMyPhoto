@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
@@ -82,6 +83,9 @@
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.infoPanel.SuspendLayout();
@@ -95,6 +99,7 @@
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -128,6 +133,7 @@
             this.statusStrip.Size = new System.Drawing.Size(891, 20);
             this.statusStrip.TabIndex = 6;
             this.statusStrip.Text = "statusStrip1";
+            this.statusStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip_ItemClicked);
             // 
             // status
             // 
@@ -182,6 +188,7 @@
             this.filesListBox.TabIndex = 7;
             this.filesListBox.SelectedIndexChanged += new System.EventHandler(this.files_SelectedIndexChanged);
             this.filesListBox.DoubleClick += new System.EventHandler(this.files_DoubleClick);
+            this.filesListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.filesListBox_MouseDown);
             // 
             // panel2
             // 
@@ -681,6 +688,28 @@
             this.aboutToolStripMenuItem.Text = "О программе";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutButton_Click);
             // 
+            // openImageToolStripMenuItem
+            // 
+            this.openImageToolStripMenuItem.Name = "openImageToolStripMenuItem";
+            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.openImageToolStripMenuItem.Text = "Открыть";
+            this.openImageToolStripMenuItem.Click += new System.EventHandler(this.OpenFileMenu_Click);
+            // 
+            // openDirectoryToolStripMenuItem
+            // 
+            this.openDirectoryToolStripMenuItem.Name = "openDirectoryToolStripMenuItem";
+            this.openDirectoryToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
+            this.openDirectoryToolStripMenuItem.Text = "Открыть папку с изображением";
+            this.openDirectoryToolStripMenuItem.Click += new System.EventHandler(this.OpenDirectoryMenu_Click);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openImageToolStripMenuItem,
+            this.openDirectoryToolStripMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(252, 48);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -718,6 +747,7 @@
             this.groupBox6.PerformLayout();
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -778,6 +808,9 @@
         private System.Windows.Forms.ListBox filesListBox;
         private System.Windows.Forms.ComboBox orientationComboBox;
         private System.Windows.Forms.CheckBox orientationСheckBox;
+        private System.Windows.Forms.ToolStripMenuItem openImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openDirectoryToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
     }
 }
 
