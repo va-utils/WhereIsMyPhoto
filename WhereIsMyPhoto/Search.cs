@@ -76,7 +76,7 @@ namespace WhereIsMyPhoto
 
         public static string GetInformation(ImageInformation img)
         {
-
+            
             Debug.Assert(img != null, "Передано пустое значение в GetInformation();");
             Debug.Assert(string.IsNullOrWhiteSpace(img.FileName) == false, "Передано пустое имя файла в структуре CompleteInfoEXIF в GetInformation()");
 
@@ -251,17 +251,17 @@ namespace WhereIsMyPhoto
                     Trace.WriteLine(img.FileName + " " + me.Message);
                 }
 
-               // Rational exposureTime = subdir.GetRational(ExifDirectoryBase.TagExposureTime);
-               // exposureTime.
+                // Rational exposureTime = subdir.GetRational(ExifDirectoryBase.TagExposureTime);
+                // exposureTime.
                 //Геолокация
-                var gpsdir = img.Directories.OfType<GpsDirectory>().FirstOrDefault();
 
-                if (gpsdir != null)
+                GeoLocation gl = GetGPSInformation(img);
+
+                if(gl!=null)
                 {
-                    GeoLocation gl = gpsdir.GetGeoLocation();
-                    if(gl!=null)
-                        sb.AppendLine("Геолокация (координаты): " + "долгота: " + gl.Longitude + " широта: " + gl.Latitude);
+                    sb.AppendLine("Геолокация (координаты): " + "долгота: " + gl.Longitude + " широта: " + gl.Latitude);
                 }
+
             }
 
             //был ли редактирован
@@ -301,6 +301,16 @@ namespace WhereIsMyPhoto
 
 
 
+        public static GeoLocation GetGPSInformation(ImageInformation img)
+        {
+            var gpsdir = img.Directories.OfType<GpsDirectory>().FirstOrDefault();
+
+            if (gpsdir != null)
+            {
+                return gpsdir.GetGeoLocation();
+            }
+            return null;
+        }
 
         //---bool-версия 27.08.18
         public bool isMatch(string fileName, IReadOnlyList<MetadataExtractor.Directory> imgExif, ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo,bool isEdit/* CancellationToken token*/)

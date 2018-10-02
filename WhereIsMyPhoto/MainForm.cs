@@ -101,7 +101,17 @@ namespace WhereIsMyPhoto
         {
             if(filesListBox.SelectedIndex!=-1)
             {
+
                 this.imageInformationTextBox.Text = Search.GetInformation(images[filesListBox.SelectedIndex]);
+                GeoLocation rgl = Search.GetGPSInformation(images[filesListBox.SelectedIndex]);
+                if(rgl!=null)
+                {
+                    contextMenuStrip.Items[3].Visible = true;
+                }
+                else
+                {
+                    contextMenuStrip.Items[3].Visible = false;
+                }
             }
         }
 
@@ -651,6 +661,26 @@ namespace WhereIsMyPhoto
         private void statusStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
 
+        }
+
+        private void openMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (filesListBox.SelectedIndex == -1) return;
+            try
+            {
+                Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)), "Пустое имя файла для открытия в просмотрщике");
+                
+                GeoLocation gl = Search.GetGPSInformation(images[filesListBox.SelectedIndex]);
+                if(gl!=null)
+                {
+                    string url = string.Format("https://www.openstreetmap.org/?mlat={0}&mlon={1}#map=17/{0}/{1}", gl.Latitude.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US")), gl.Longitude.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US")));
+                    Process.Start(url);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(ex.Message);
+            }
         }
     }
 }
