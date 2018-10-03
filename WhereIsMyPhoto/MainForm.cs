@@ -19,11 +19,6 @@ namespace WhereIsMyPhoto
         [System.Runtime.InteropServices.DllImport("user32")]
         private static extern bool HideCaret(IntPtr hWnd);
 
-        
-        
-        
-
-
         bool isWorking;
 
         StringBuilder searchSettings = new StringBuilder(200);
