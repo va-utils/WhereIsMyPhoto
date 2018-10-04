@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,8 +17,25 @@ namespace WhereIsMyPhoto
 {
     public partial class MainForm : Form
     {
-        [System.Runtime.InteropServices.DllImport("user32")]
+        [DllImport("user32")]
         private static extern bool HideCaret(IntPtr hWnd);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct FLASHWINFO
+        {
+            [MarshalAs(UnmanagedType.U4)]
+            public int cbSize;
+            public IntPtr hwnd;
+            [MarshalAs(UnmanagedType.U4)]
+            public int dwFlags;
+            [MarshalAs(UnmanagedType.U4)]
+            public int uCount;
+            [MarshalAs(UnmanagedType.U4)]
+            public int dwTimeout;
+        }
+
+        [DllImport("user32")]
+        public static extern bool FlashWindowEx([MarshalAs(UnmanagedType.Struct)]ref FLASHWINFO pwfi);
 
         bool isWorking;
 
@@ -387,7 +405,17 @@ namespace WhereIsMyPhoto
                 searchToolStripMenuItem.Click += StartSearch;
                 searchToolStripMenuItem.Click -= Stop;
 
-
+                if(WindowState == FormWindowState.Minimized)
+                {
+                    //мигание значка на панели задач, когда поиск завершен (если окно свернуто)
+                    FLASHWINFO fwi = new FLASHWINFO();
+                    fwi.cbSize = Marshal.SizeOf(fwi);
+                    fwi.hwnd = Handle;
+                    fwi.dwFlags = 0x00000002;
+                    fwi.dwTimeout = 0;
+                    fwi.uCount = 5;
+                    FlashWindowEx(ref fwi);
+                }
 
 #if DEBUG
                 #region Tests
