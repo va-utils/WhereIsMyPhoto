@@ -145,5 +145,17 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                Process.Start("mailto:viktor70@protonmail.com");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось запустить почтовую программу...", "WhereIsMyPhoto");
+            }
+        }
     }
 }

@@ -220,6 +220,8 @@ namespace WhereIsMyPhoto
 
                 searchSettings.Clear();
 
+                
+
                 //------ДАТА
                 if (datesCheckBox.Checked == true)
                 {
@@ -358,10 +360,12 @@ namespace WhereIsMyPhoto
                 
                 if(allDrivesCheckBox.Checked)
                 {
+                    searchSettings.AppendLine("Поиск изображений: весь компьютер");
                     finder = new Search(!skipWinDirectoryCheckBox.Checked);
                 }
                 else
                 {
+                    searchSettings.AppendLine("Поиск изображений в: " + pathTextBox.Text);
                     finder = new Search(pathTextBox.Text,!skipWinDirectoryCheckBox.Checked);
                 }
 
@@ -536,7 +540,7 @@ namespace WhereIsMyPhoto
             }
             else
             {
-                MessageBox.Show("Путь указан неверно!");
+                MessageBox.Show("Путь указан неверно!","WhereIsMyPhoto");
             }
         }
 
@@ -658,6 +662,10 @@ namespace WhereIsMyPhoto
                     }
 
                 }
+            }
+            else
+            {
+                MessageBox.Show("Нет результатов поиска для сохранения","WhereIsMyPhoto");
             }
         }
 
