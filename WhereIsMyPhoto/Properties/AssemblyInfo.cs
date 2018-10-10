@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WhereIsMyPhoto")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Вяличкин Виктор")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("WhereIsMyPhoto")]
 [assembly: AssemblyCopyright("Copyright © Вяличкин Виктор 2018")]
 [assembly: AssemblyTrademark("")]

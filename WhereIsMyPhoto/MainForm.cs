@@ -105,7 +105,9 @@ namespace WhereIsMyPhoto
 
             if(Properties.Settings.Default.isFirstStart)
             {
-                //вывести справку
+                HelpAndInformation.ShowHelpFile();
+                Properties.Settings.Default.isFirstStart = false;
+                Properties.Settings.Default.Save();
             }
 
         }
@@ -114,17 +116,21 @@ namespace WhereIsMyPhoto
         {
             if(filesListBox.SelectedIndex!=-1)
             {
-
                 this.imageInformationTextBox.Text = Search.GetInformation(images[filesListBox.SelectedIndex]);
-                GeoLocation rgl = Search.GetGPSInformation(images[filesListBox.SelectedIndex]);
-                if(rgl!=null)
-                {
-                    contextMenuStrip.Items[3].Visible = true;
-                }
-                else
-                {
-                    contextMenuStrip.Items[3].Visible = false;
-                }
+             //   CheckGeoLocationForMenu();
+            }
+        }
+
+        private void CheckGeoLocationForMenu(int index)
+        {
+            GeoLocation rgl = Search.GetGPSInformation(images[index]);
+            if (rgl != null)
+            {
+                contextMenuStrip.Items[3].Visible = true;
+            }
+            else
+            {
+                contextMenuStrip.Items[3].Visible = false;
             }
         }
 
@@ -679,13 +685,23 @@ namespace WhereIsMyPhoto
             if (e.Button == MouseButtons.Right)
             {
                 int i = filesListBox.IndexFromPoint(e.X, e.Y);
-                Console.WriteLine(i);
                 if (i != -1)
                 {
                     filesListBox.SelectedIndex = i;
+                    CheckGeoLocationForMenu(i);
                     contextMenuStrip.Items[0].Text = System.IO.Path.GetFileName(images[filesListBox.SelectedIndex].FileName);
                     contextMenuStrip.Show(MousePosition);
                 }
+            }
+            if (e.Button == MouseButtons.Middle)
+            {
+                int i = filesListBox.IndexFromPoint(e.X, e.Y);
+                if(i!=-1)
+                {
+                    filesListBox.SelectedIndex = i;
+                    new Preview(images[filesListBox.SelectedIndex]).Show();
+                }
+
             }
         }
 
@@ -712,6 +728,16 @@ namespace WhereIsMyPhoto
             {
                 Trace.WriteLine(ex.Message);
             }
+        }
+
+        private void filesListBox_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void MainForm_MaximumSizeChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

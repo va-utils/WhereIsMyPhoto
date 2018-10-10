@@ -289,6 +289,13 @@ namespace WhereIsMyPhoto
                 {
                     sb.AppendLine("Последний раз файл изменялся: " + subfiledir.GetDateTime(FileMetadataDirectory.TagFileModifiedDate).ToString("f"));
                 }
+                if (subfiledir != null && subfiledir.ContainsTag(FileMetadataDirectory.TagFileSize))
+                {
+                    double sizeMB = subfiledir.GetInt32(FileMetadataDirectory.TagFileSize) / 1048576.0;
+                    sb.AppendLine("Размер файла: " + Math.Round(sizeMB,3) + " МиБ");
+                }
+
+                
             }
             catch(Exception ex)
             {

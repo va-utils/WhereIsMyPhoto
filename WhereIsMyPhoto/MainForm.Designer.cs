@@ -87,7 +87,6 @@
             this.openDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.infoPanel.SuspendLayout();
@@ -188,6 +187,7 @@
             this.filesListBox.Name = "filesListBox";
             this.filesListBox.Size = new System.Drawing.Size(562, 197);
             this.filesListBox.TabIndex = 7;
+            this.filesListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.filesListBox_MouseClick);
             this.filesListBox.SelectedIndexChanged += new System.EventHandler(this.files_SelectedIndexChanged);
             this.filesListBox.DoubleClick += new System.EventHandler(this.files_DoubleClick);
             this.filesListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.filesListBox_MouseDown);
@@ -629,8 +629,7 @@
             // 
             this.mainMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.helpToolStripMenuItem1,
-            this.toolStripMenuItem1});
+            this.helpToolStripMenuItem1});
             this.mainMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip.Name = "mainMenuStrip";
             this.mainMenuStrip.Size = new System.Drawing.Size(891, 24);
@@ -721,11 +720,6 @@
             this.openMapToolStripMenuItem.Text = "Показать на карте";
             this.openMapToolStripMenuItem.Click += new System.EventHandler(this.openMapToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(122, 20);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -737,6 +731,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "...";
+            this.MaximumSizeChanged += new System.EventHandler(this.MainForm_MaximumSizeChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -828,7 +823,6 @@
         private System.Windows.Forms.ToolStripMenuItem openDirectoryToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem openMapToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
     }
 }
 
