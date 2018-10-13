@@ -232,6 +232,27 @@ namespace WhereIsMyPhoto
                     }
                 }
 
+                if (subdir.ContainsTag(ExifDirectoryBase.TagFNumber))
+                {
+                    string fnum = subdir.GetDescription(ExifDirectoryBase.TagFNumber);
+                    if (fnum != null)
+                        sb.AppendLine("Диафрагма: " + fnum);
+                }
+
+                if (subdir.ContainsTag(ExifDirectoryBase.TagFocalLength))
+                {
+                    string flen = subdir.GetDescription(ExifDirectoryBase.TagFocalLength);
+                    if (flen != null)
+                        sb.AppendLine("Фокусное расстояние: " + flen);
+                }
+
+                if (subdir.ContainsTag(ExifDirectoryBase.TagExposureBias))
+                {
+                    string exbias = subdir.GetDescription(ExifDirectoryBase.TagExposureBias);
+                    if (exbias != null)
+                        sb.AppendLine("Коррекция экспозиции: " + exbias);
+                }
+
 
                 //  var sdir = img.dirs.OfType<ExifIfd0Directory>().FirstOrDefault();
                 try

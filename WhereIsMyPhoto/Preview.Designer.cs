@@ -49,6 +49,7 @@
             this.pictureBox.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox.MinimumSize = new System.Drawing.Size(300, 300);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(461, 359);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;

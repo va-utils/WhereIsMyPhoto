@@ -162,6 +162,7 @@
             this.imageInformationTextBox.Multiline = true;
             this.imageInformationTextBox.Name = "imageInformationTextBox";
             this.imageInformationTextBox.ReadOnly = true;
+            this.imageInformationTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.imageInformationTextBox.Size = new System.Drawing.Size(313, 197);
             this.imageInformationTextBox.TabIndex = 0;
             this.imageInformationTextBox.TabStop = false;
