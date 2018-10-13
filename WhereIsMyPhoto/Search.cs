@@ -42,12 +42,12 @@ namespace WhereIsMyPhoto
         public event EventHandler IOFatalError;
 
         /* главная функция поиска всех изображений по заданному пути */
-        public async Task<List<ImageInformation>> GetImagesWithMyParams(ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
+        public async Task<List<ImageInformation>> GetImagesWithMyParams(ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, ImageFileSource ifs, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
         {
             if(!allDrives)
             {
                 Trace.WriteLine("Начат поиск в " + path);
-                return await Task.Run(() => ImageList = GetImagesUponMyCriteria(path, iso, date, et, ep, or, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token), token);
+                return await Task.Run(() => ImageList = GetImagesUponMyCriteria(path, iso, date, et, ep, or,ifs, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token), token);
             }
                 
             else
@@ -64,7 +64,7 @@ namespace WhereIsMyPhoto
                         if (d.IsReady)
                         {
                             Trace.WriteLine("Поиск по диску " + d.RootDirectory.FullName);
-                            ImageList.AddRange(GetImagesUponMyCriteria(d.RootDirectory.FullName, iso, date, et, ep, or, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token));
+                            ImageList.AddRange(GetImagesUponMyCriteria(d.RootDirectory.FullName, iso, date, et, ep, or, ifs, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token));
                         }    
                         else
                             Trace.WriteLine("Диск " + d.Name + " был доступен в начале сканирования, но оказался недоступен в дальнейшем. Не сканировался.");
@@ -85,24 +85,25 @@ namespace WhereIsMyPhoto
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine("Сведения о файле: " + img.FileName);
-
-            //ISO
+            
             var subdir = img.Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+            var dir = img.Directories.OfType<ExifIfd0Directory>().FirstOrDefault();
+            var subfiledir = img.Directories.OfType<FileMetadataDirectory>().FirstOrDefault();
 
-            if(subdir!=null)
+            if (subdir != null)
             {
                 //---------------------------------------------------------------------------------------------------
                 //Дата и время
                 try
                 {
-                    if(subdir.ContainsTag(ExifDirectoryBase.TagDateTimeOriginal))
+                    if (subdir.ContainsTag(ExifDirectoryBase.TagDateTimeOriginal))
                     {
                         DateTime dtdate = subdir.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal);
                         if (dtdate != null)
                             sb.AppendLine("Снимок сделан: " + dtdate.ToString("f"));
                     }
                 }
-                catch(MetadataException me)
+                catch (MetadataException me)
                 {
                     Trace.WriteLine(img.FileName + " " + me.Message);
                 }
@@ -115,55 +116,21 @@ namespace WhereIsMyPhoto
                 //Вспышка
                 try
                 {
-                    if(subdir.ContainsTag(ExifDirectoryBase.TagFlash))
+                    if (subdir.ContainsTag(ExifDirectoryBase.TagFlash))
                     {
                         string sFlash = subdir.GetDescription(ExifDirectoryBase.TagFlash);
                         ushort iFlash = subdir.GetUInt16(ExifDirectoryBase.TagFlash);
                         sb.AppendLine("Вспышка: " + (((iFlash & (0x1)) == 1) ? "использовалась - " + sFlash : "не использовалась")); ;
                     }
                 }
-                catch(MetadataException me)
+                catch (MetadataException me)
                 {
                     Trace.WriteLine(img.FileName + " " + me.Message);
                 }
 
-                //ориентация
                 try
                 {
-                    var subifd0dir = img.Directories.OfType<ExifIfd0Directory>().FirstOrDefault();
-                    if (subifd0dir!=null && subifd0dir.ContainsTag(ExifDirectoryBase.TagOrientation))
-                    {
-                      //  string orient = subifd0dir.GetDescription(ExifDirectoryBase.TagOrientation);
-                        uint orient = subifd0dir.GetUInt16(ExifDirectoryBase.TagOrientation);
-                        switch(orient)
-                        {
-                            case 1:
-                                sb.AppendLine("Ориентация: горизонтальная");
-                                break;
-                            case 3:
-                                sb.AppendLine("Ориентация: горизонтальная, повернут на 180°");
-                                break;
-                            case 6:
-                                sb.AppendLine("Ориентация: вертикальная");
-                                break;
-                            case 8:
-                                sb.AppendLine("Ориентация: горизонтальная, повернут на 270°");
-                                break;
-                            default:
-                                sb.AppendLine("Ориентация: " + orient);
-                                break;
-                        }
-                       // sb.AppendLine(subifd0dir.GetDescription(ExifDirectoryBase.TagOrientation));
-                    }
-                }
-                catch(MetadataException me)
-                {
-                    Trace.WriteLine(img.FileName + " " + me.Message);
-                }
-                //программа экспозиции
-                try
-                {
-                    if(subdir.ContainsTag(ExifDirectoryBase.TagExposureProgram))
+                    if (subdir.ContainsTag(ExifDirectoryBase.TagExposureProgram))
                     {
                         ushort eProgram = subdir.GetUInt16(ExifDirectoryBase.TagExposureProgram);
                         switch (eProgram)
@@ -193,17 +160,16 @@ namespace WhereIsMyPhoto
                                 sb.AppendLine("Программа экспозции: пейзажный/ландшафтный режим");
                                 break;
                         }
-                    }      
+                    }
                 }
-                catch(MetadataException me)
+                catch (MetadataException me)
                 {
                     Trace.WriteLine(img.FileName + " " + me.Message);
                 }
 
-                //Баланс белого
                 try
                 {
-                    if(subdir.ContainsTag(ExifDirectoryBase.TagWhiteBalanceMode))
+                    if (subdir.ContainsTag(ExifDirectoryBase.TagWhiteBalanceMode))
                     {
                         ushort whiteBalance = subdir.GetUInt16(ExifDirectoryBase.TagWhiteBalanceMode);
                         sb.AppendLine("Баланс белого: " + ((whiteBalance == 1) ? "ручная настройка" : "автоматически"));
@@ -217,13 +183,11 @@ namespace WhereIsMyPhoto
                 }
                 catch (MetadataException me)
                 {
-                    
+
                     Trace.WriteLine(img.FileName + " " + me.Message);
                 }
 
-                //выдержка
-
-                if(subdir.ContainsTag(ExifDirectoryBase.TagExposureTime))
+                if (subdir.ContainsTag(ExifDirectoryBase.TagExposureTime))
                 {
                     string sExposureTime = subdir.GetDescription(ExifDirectoryBase.TagExposureTime);
                     if (sExposureTime != null)
@@ -233,79 +197,126 @@ namespace WhereIsMyPhoto
                 }
 
 
-                //  var sdir = img.dirs.OfType<ExifIfd0Directory>().FirstOrDefault();
+                if (subdir.ContainsTag(ExifDirectoryBase.TagFNumber))
+                {
+                    string fnum = subdir.GetDescription(ExifDirectoryBase.TagFNumber);
+                    if(fnum!=null)
+                        sb.AppendLine("Диафрагма: " + fnum);
+                }
+
+                if (subdir.ContainsTag(ExifDirectoryBase.TagFocalLength))
+                {
+                    string flen = subdir.GetDescription(ExifDirectoryBase.TagFocalLength);
+                    if (flen != null)
+                        sb.AppendLine("Фокусное расстояние: " + flen);
+                }
+
+                if (subdir.ContainsTag(ExifDirectoryBase.TagExposureBias))
+                {
+                    string exbias = subdir.GetDescription(ExifDirectoryBase.TagExposureBias);
+                    if (exbias != null)
+                        sb.AppendLine("Коррекция экспозиции: " + exbias);
+                }
+
+            }
+
+            if(dir!=null)
+            {
                 try
                 {
-                    var subifd0dir = img.Directories.OfType<ExifIfd0Directory>().FirstOrDefault();
-                    if(subifd0dir!=null && subifd0dir.ContainsTag(ExifDirectoryBase.TagMake))
+                    if (dir.ContainsTag(ExifDirectoryBase.TagOrientation))
                     {
-                        string cameraModel = subifd0dir.GetDescription(ExifDirectoryBase.TagMake);
+                        //  string orient = subifd0dir.GetDescription(ExifDirectoryBase.TagOrientation);
+                        uint orient = dir.GetUInt16(ExifDirectoryBase.TagOrientation);
+                        switch (orient)
+                        {
+                            case 1:
+                                sb.AppendLine("Ориентация: горизонтальная");
+                                break;
+                            case 3:
+                                sb.AppendLine("Ориентация: горизонтальная, повернут на 180°");
+                                break;
+                            case 6:
+                                sb.AppendLine("Ориентация: вертикальная");
+                                break;
+                            case 8:
+                                sb.AppendLine("Ориентация: горизонтальная, повернут на 270°");
+                                break;
+                            default:
+                                sb.AppendLine("Ориентация: " + orient);
+                                break;
+                        }
+                        // sb.AppendLine(subifd0dir.GetDescription(ExifDirectoryBase.TagOrientation));
+                    }
+                }
+                catch (MetadataException me)
+                {
+                    Trace.WriteLine(img.FileName + " " + me.Message);
+                }
+
+                try
+                {
+                    if (dir.ContainsTag(ExifDirectoryBase.TagMake))
+                    {
+                        string cameraModel = dir.GetDescription(ExifDirectoryBase.TagMake);
                         if (cameraModel != null)
                         {
                             sb.AppendLine("Камера: " + cameraModel);
                         }
                     }
                 }
-                catch(MetadataException me)
+                catch (MetadataException me)
                 {
                     Trace.WriteLine(img.FileName + " " + me.Message);
                 }
 
-                // Rational exposureTime = subdir.GetRational(ExifDirectoryBase.TagExposureTime);
-                // exposureTime.
-                //Геолокация
-
                 GeoLocation gl = GetGPSInformation(img);
 
-                if(gl!=null)
+                if (gl != null)
                 {
                     sb.AppendLine("Геолокация (координаты): " + "долгота: " + gl.Longitude + " широта: " + gl.Latitude);
                 }
 
-            }
 
-            //был ли редактирован
-            try
-            {
-                var IfdDirectory = img.Directories.OfType<ExifIfd0Directory>().FirstOrDefault();
-                if(IfdDirectory!=null && IfdDirectory.ContainsTag(ExifIfd0Directory.TagSoftware))
+
+                try
                 {
-                    string softWare = IfdDirectory?.GetDescription(ExifDirectoryBase.TagSoftware);
-                    sb.AppendLine("Программа: " + softWare);
+                    if (dir.ContainsTag(ExifIfd0Directory.TagSoftware))
+                    {
+                        string softWare = dir?.GetDescription(ExifDirectoryBase.TagSoftware);
+                        sb.AppendLine("Программа: " + softWare);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(img.FileName + " " + ex.Message);
                 }
             }
-            catch(Exception ex)
+
+            if (subfiledir != null)
             {
-                Trace.WriteLine(img.FileName + " " + ex.Message);
-            }
-
-
-            //Сведения о файле:
-
-            try
-            {
-                var subfiledir = img.Directories.OfType<FileMetadataDirectory>().FirstOrDefault();
-                if(subfiledir!=null && subfiledir.ContainsTag(FileMetadataDirectory.TagFileModifiedDate))
+                try
                 {
-                    sb.AppendLine("Последний раз файл изменялся: " + subfiledir.GetDateTime(FileMetadataDirectory.TagFileModifiedDate).ToString("f"));
+
+                    if (subfiledir.ContainsTag(FileMetadataDirectory.TagFileModifiedDate))
+                    {
+                        sb.AppendLine("Последний раз файл изменялся: " + subfiledir.GetDateTime(FileMetadataDirectory.TagFileModifiedDate).ToString("f"));
+                    }
+                    if (subfiledir != null && subfiledir.ContainsTag(FileMetadataDirectory.TagFileSize))
+                    {
+                        double sizeMB = subfiledir.GetInt32(FileMetadataDirectory.TagFileSize) / 1048576.0;
+                        sb.AppendLine("Размер файла: " + Math.Round(sizeMB, 3) + " МиБ");
+                    }
+
+
                 }
-                if (subfiledir != null && subfiledir.ContainsTag(FileMetadataDirectory.TagFileSize))
+                catch (Exception ex)
                 {
-                    double sizeMB = subfiledir.GetInt32(FileMetadataDirectory.TagFileSize) / 1048576.0;
-                    sb.AppendLine("Размер файла: " + Math.Round(sizeMB,3) + " МиБ");
-                }
-
-                
+                    Trace.WriteLine(img.FileName + " " + ex.Message);
+                }    
             }
-            catch(Exception ex)
-            {
-                Trace.WriteLine(img.FileName + " " + ex.Message);
-            }
-
-               
             return sb.ToString();
         }
-
 
 
         public static GeoLocation GetGPSInformation(ImageInformation img)
@@ -320,10 +331,10 @@ namespace WhereIsMyPhoto
         }
 
         //---bool-версия 27.08.18
-        public bool isMatch(string fileName, IReadOnlyList<MetadataExtractor.Directory> imgExif, ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo,bool isEdit/* CancellationToken token*/)
+        public bool isMatch(string fileName, IReadOnlyList<MetadataExtractor.Directory> imgExif, ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or,ImageFileSource ifs, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo,bool isEdit/* CancellationToken token*/)
         {
             
-            if (iso == null && date == null && et == null && camName == null && isManualWhiteBalance == false && isFlash == false && isGeo == false && isEdit==false && ep == ExposureProgram.Any && or == Orientation.Any)
+            if (iso == null && date == null && et == null && camName == null && isManualWhiteBalance == false && isFlash == false && isGeo == false && isEdit==false && ep == ExposureProgram.Any && or == Orientation.Any && ifs == ImageFileSource.Any)
                 return true; // критериев нет, подойдет любое
 
             var subdir = imgExif.OfType<ExifSubIfdDirectory>().FirstOrDefault();
@@ -419,6 +430,31 @@ namespace WhereIsMyPhoto
 
                 }
                 catch(Exception e)
+                {
+                    Trace.WriteLine(fileName + " " + e.Message);
+                    return false;
+                }
+            }
+
+            if(ifs!=ImageFileSource.Any) //источник сканирования
+            {
+                try
+                {
+                    if (!subdir.ContainsTag(ExifDirectoryBase.TagFileSource))
+                        return false;
+                    ushort fs = subdir.GetUInt16(ExifDirectoryBase.TagFileSource);
+                    if(ifs == ImageFileSource.DSC)
+                    {
+                        if (fs != 3)
+                            return false;
+                    }
+                    if(ifs == ImageFileSource.Scan)
+                    {
+                        if ((fs != 1) | (fs != 2))
+                            return false;
+                    }
+                }
+                catch (Exception e)
                 {
                     Trace.WriteLine(fileName + " " + e.Message);
                     return false;
@@ -563,7 +599,7 @@ namespace WhereIsMyPhoto
             return true;
         }
 
-        private List<ImageInformation> GetImagesUponMyCriteria(string path, ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
+        private List<ImageInformation> GetImagesUponMyCriteria(string path, ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, ImageFileSource ifs, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
         {
             Debug.Assert(String.IsNullOrWhiteSpace(path) == false, "Передана пустая  строка в GetAllImages()");
 
@@ -610,7 +646,7 @@ namespace WhereIsMyPhoto
                 try
                 {
                     var dirsPhoto = MetadataExtractor.ImageMetadataReader.ReadMetadata(Path.GetFullPath(f));
-                    if(isMatch(f,dirsPhoto,iso,date,et,ep,or, camName, isManualWhiteBalance,isFlash,isGeo,isEdit))
+                    if(isMatch(f,dirsPhoto,iso,date,et,ep,or,ifs, camName, isManualWhiteBalance,isFlash,isGeo,isEdit))
                     {
                         ImageInformation ciexif = new ImageInformation(f, dirsPhoto);
                         result.Add(ciexif);
@@ -662,7 +698,7 @@ namespace WhereIsMyPhoto
                 }
                 try
                 {
-                    result.AddRange(GetImagesUponMyCriteria(d,iso,date,et,ep,or, camName, isManualWhiteBalance,isFlash,isGeo,isEdit, token));
+                    result.AddRange(GetImagesUponMyCriteria(d,iso,date,et,ep,or,ifs, camName, isManualWhiteBalance,isFlash,isGeo,isEdit, token));
                 }
                 catch (UnauthorizedAccessException uae)
                 {

@@ -34,9 +34,13 @@ namespace WhereIsMyPhoto
             public int dwTimeout;
         }
 
+        ImageWorks imageWorks = null;
+        int oldSelectedIndex = -1;
+
         [DllImport("user32")]
         public static extern bool FlashWindowEx([MarshalAs(UnmanagedType.Struct)]ref FLASHWINFO pwfi);
 
+        bool redraw_flag;
         bool isWorking;
 
         StringBuilder searchSettings = new StringBuilder(200);
@@ -94,6 +98,8 @@ namespace WhereIsMyPhoto
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            
+            fileSourceComboBox.SelectedIndex = 0;
             contextMenuStrip.Items.Insert(0, new ToolStripLabel("..."));
             contextMenuStrip.Items[0].ForeColor = Color.DarkBlue;
 
@@ -117,7 +123,13 @@ namespace WhereIsMyPhoto
             if(filesListBox.SelectedIndex!=-1)
             {
                 this.imageInformationTextBox.Text = Search.GetInformation(images[filesListBox.SelectedIndex]);
-             //   CheckGeoLocationForMenu();
+                
+                if(tabControl.SelectedIndex == 1)
+                {
+                    oldSelectedIndex = filesListBox.SelectedIndex;
+                    CreatePreview();
+                }
+                    
             }
         }
 
@@ -216,6 +228,7 @@ namespace WhereIsMyPhoto
                 ExposureProgram ep = ExposureProgram.Any;
                 Orientation or = Orientation.Any;
                 ExposureTime et = null;
+                ImageFileSource ifs = ImageFileSource.Any;
                 string camName = null;
                 bool isManualWhiteBalance = false;
                 bool isFlashOn = false;
@@ -336,14 +349,17 @@ namespace WhereIsMyPhoto
                 }
                 if(ExposureProgramCheckBox.Checked)
                 {
-                    int sel = exposureProgramComboBox.SelectedIndex;
-                    if(sel==-1)
+                    if(exposureProgramComboBox.SelectedIndex == -1)
                     {
                         MessageBox.Show("Неверно выставлены настройки поиска по программе управления экспозицией. Пожалуйста исправьте.");
                         return;
                     }
                     ep = (ExposureProgram)exposureProgramComboBox.SelectedIndex+1;
                 }
+
+                //источник изображения
+                ifs = (ImageFileSource)fileSourceComboBox.SelectedIndex;
+
 
                 if(orientationСheckBox.Checked)
                 {
@@ -391,6 +407,7 @@ namespace WhereIsMyPhoto
 
                 imagesBindingSource.Clear();
                 imageInformationTextBox.Clear();
+                pictureBox.Image = null;
 
                 //---пуск задачи---//
                 cancelTokenSource = new CancellationTokenSource();
@@ -398,7 +415,7 @@ namespace WhereIsMyPhoto
                 
 
                 isWorking = true;
-                await finder.GetImagesWithMyParams(iso, date, et, ep, or, camName, isManualWhiteBalance, isFlashOn, isGPS, isEdit, token);
+                await finder.GetImagesWithMyParams(iso, date, et, ep, or,ifs, camName, isManualWhiteBalance, isFlashOn, isGPS, isEdit, token);
                 isWorking = false;
 
                // MessageBox.Show(searchSettings.ToString() + "\nНайдено изображений: " + imagesBindingSource.Count);
@@ -730,14 +747,79 @@ namespace WhereIsMyPhoto
             }
         }
 
-        private void filesListBox_MouseClick(object sender, MouseEventArgs e)
+        private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if ((oldSelectedIndex != filesListBox.SelectedIndex))
+            {
+                if (tabControl.SelectedIndex == 0)
+                {
+                    pictureBox.Image = null;
+                }
+                if (tabControl.SelectedIndex == 1)
+                {
+                    if (filesListBox.SelectedIndex != -1)
+                    {
+                        Trace.WriteLine("Подготовка предпросмотра...");
+                        CreatePreview();
+                        oldSelectedIndex = filesListBox.SelectedIndex;
+                    }
+                }
+            }
+            else //выбранный элемент не изменился, но возможно изменились размеры формы
+            {
+                if(redraw_flag)
+                {
+                    Trace.WriteLine("Требуется перерисовка изображения в связи с изменением размера формы.");
+                    RedrawPreview();
+                    redraw_flag = false;
+                }
+                else
+                    Trace.WriteLine("Перерисовка не требуется...");
+            }
         }
 
-        private void MainForm_MaximumSizeChanged(object sender, EventArgs e)
+        private void CreatePreview()
         {
-
+            imageWorks = new ImageWorks(images[filesListBox.SelectedIndex]);
+            imageWorks.SetCorrectOrientation();
+            pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);
         }
+
+        private void RedrawPreview()
+        {
+            if(pictureBox.Image!=null)
+            {
+                Console.WriteLine("Size of PictureBox: " + pictureBox.Size);
+                pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);
+            }          
+        }
+
+        private const int WM_EXITSIZEMOVE = 0x0232;
+
+        FormWindowState StoredWindowState;
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (WindowState != StoredWindowState && WindowState != FormWindowState.Minimized)
+            {
+                if (tabControl.SelectedIndex == 1)
+                    RedrawPreview();
+                else
+                    redraw_flag = true;
+                StoredWindowState = WindowState;
+            }
+        }
+        
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_EXITSIZEMOVE)
+            {
+                if (tabControl.SelectedIndex == 1)
+                    RedrawPreview();
+                else
+                    redraw_flag = true;
+            }            
+            base.WndProc(ref m);
+        }
+
     }
 }
