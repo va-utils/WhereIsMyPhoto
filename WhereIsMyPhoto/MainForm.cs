@@ -62,8 +62,8 @@ namespace WhereIsMyPhoto
             try
             {
                 Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)), "Пустое имя файла для открытия в просмотрщике");
-                string directoryPath = System.IO.Path.GetDirectoryName(images[filesListBox.SelectedIndex].FileName);
-                Process.Start(directoryPath);
+                //  string directoryPath = System.IO.Path.GetDirectoryName(images[filesListBox.SelectedIndex].FileName);
+                Process.Start(new ProcessStartInfo("explorer.exe", " /select, " + images[filesListBox.SelectedIndex].FileName));
             }
             catch (Exception ex)
             {
