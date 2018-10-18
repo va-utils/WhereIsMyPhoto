@@ -4,6 +4,14 @@ using MetadataExtractor;
 
 namespace WhereIsMyPhoto
 {
+
+    public enum ImageFileSource
+    {
+        Any,
+        DSC,
+        Scan,
+    }
+
     public enum ExposureProgram
     {
         Any,
