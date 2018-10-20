@@ -27,7 +27,7 @@ namespace WhereIsMyPhoto
             imagePath = ii.FileName;
         }
 
-        public void SetCorrectOrientation()
+        public bool TryCreateImageWithCorrectOrientation()
         {
             try
             {
@@ -62,18 +62,21 @@ namespace WhereIsMyPhoto
                             break;
                     }
                 }
+                return true;
             }
             catch (System.IO.FileNotFoundException)
             {
                 string errmes = "Не удалось открыть файл для быстрого просмотра: " + imagePath + "\nФайл не найден";
                 Trace.WriteLine(errmes);
                 MessageBox.Show(errmes, "WhereIsMyPhoto");
+                return false;
             }
             catch (Exception ex)
             {
                 string errmes = "Не удалось открыть файл для быстрого просмотра: " + imagePath + "\n" + ex.Message;
                 Trace.WriteLine(errmes);
                 MessageBox.Show(errmes, "WhereIsMyPhoto");
+                return false;
             }
         }
 

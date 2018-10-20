@@ -82,24 +82,17 @@ namespace WhereIsMyPhoto
 
         public MainForm()
         {
-            //--настройка вывода информации для тестирования ---//
-            //System.IO.File.Create("whereismyphoto.log.txt");
-
-            //--------------------------------------------------//
             InitializeComponent();
             imagesBindingSource = new BindingSource
             {
                 DataSource = images
-            };
-
-            
-           
+            }; 
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            
-            fileSourceComboBox.SelectedIndex = 0;
+           
+           // fileSourceComboBox.SelectedIndex = 0;
             contextMenuStrip.Items.Insert(0, new ToolStripLabel("..."));
             contextMenuStrip.Items[0].ForeColor = Color.DarkBlue;
 
@@ -228,7 +221,7 @@ namespace WhereIsMyPhoto
                 ExposureProgram ep = ExposureProgram.Any;
                 Orientation or = Orientation.Any;
                 ExposureTime et = null;
-                ImageFileSource ifs = ImageFileSource.Any;
+                bool isDSC = false;
                 string camName = null;
                 bool isManualWhiteBalance = false;
                 bool isFlashOn = false;
@@ -358,7 +351,13 @@ namespace WhereIsMyPhoto
                 }
 
                 //источник изображения
-                ifs = (ImageFileSource)fileSourceComboBox.SelectedIndex;
+                
+                if(DSCCheckBox.Checked)
+                {
+                    isDSC = true;
+                    searchSettings.AppendLine("Поиск изображений сделанных только на фотоаппарат");
+
+                }
 
 
                 if(orientationСheckBox.Checked)
@@ -415,7 +414,7 @@ namespace WhereIsMyPhoto
                 
 
                 isWorking = true;
-                await finder.GetImagesWithMyParams(iso, date, et, ep, or,ifs, camName, isManualWhiteBalance, isFlashOn, isGPS, isEdit, token);
+                await finder.GetImagesWithMyParams(iso, date, et, ep, or,isDSC, camName, isManualWhiteBalance, isFlashOn, isGPS, isEdit, token);
                 isWorking = false;
 
                // MessageBox.Show(searchSettings.ToString() + "\nНайдено изображений: " + imagesBindingSource.Count);
@@ -466,6 +465,16 @@ namespace WhereIsMyPhoto
                         var sdir = i.Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
                         var wb = sdir.GetUInt16(ExifDirectoryBase.TagWhiteBalanceMode);
                         Debug.Assert(wb == 1, "White Balance Bug: " + i.FileName);
+                    }
+                }
+                //---тестируем источник снимка
+                if(DSCCheckBox.Checked)
+                {
+                    foreach(var i in images)
+                    {
+                        var sdir = i.Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+                        var dsc = sdir.GetUInt16(ExifDirectoryBase.TagFileSource);
+                        Debug.Assert(dsc == 3, " DSC Bug: " + i.FileName);
                     }
                 }
 
@@ -754,6 +763,7 @@ namespace WhereIsMyPhoto
                 if (tabControl.SelectedIndex == 0)
                 {
                     pictureBox.Image = null;
+                    imageWorks = null;
                 }
                 if (tabControl.SelectedIndex == 1)
                 {
@@ -781,15 +791,18 @@ namespace WhereIsMyPhoto
         private void CreatePreview()
         {
             imageWorks = new ImageWorks(images[filesListBox.SelectedIndex]);
-            imageWorks.SetCorrectOrientation();
-            pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);
+            bool isOK = imageWorks.TryCreateImageWithCorrectOrientation();
+            if (isOK)
+                pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);
+            else
+                pictureBox.Image = null;
         }
 
         private void RedrawPreview()
         {
             if(pictureBox.Image!=null)
             {
-                Console.WriteLine("Size of PictureBox: " + pictureBox.Size);
+              //  Console.WriteLine("Size of PictureBox: " + pictureBox.Size);
                 pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);
             }          
         }
@@ -821,5 +834,9 @@ namespace WhereIsMyPhoto
             base.WndProc(ref m);
         }
 
+        private void SendBugToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelpAndInformation.SendBug();
+        }
     }
 }

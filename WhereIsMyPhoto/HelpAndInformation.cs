@@ -25,5 +25,17 @@ namespace WhereIsMyPhoto
                 }
             }
         }
+
+        public static void SendBug()
+        {
+            try
+            {
+                Process.Start("http://va.eviko.org/");
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось открыть браузер...");
+            }
+        }
     }
 }

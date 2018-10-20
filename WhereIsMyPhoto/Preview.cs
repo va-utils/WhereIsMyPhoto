@@ -49,7 +49,7 @@ namespace WhereIsMyPhoto
         private void ShowImage()
         {
             imageWorks = new ImageWorks(imageInformation);
-            imageWorks.SetCorrectOrientation();
+            imageWorks.TryCreateImageWithCorrectOrientation();
             pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);
         }
 

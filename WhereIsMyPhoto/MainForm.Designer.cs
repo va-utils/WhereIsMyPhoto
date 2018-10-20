@@ -34,11 +34,15 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.status = new System.Windows.Forms.ToolStripStatusLabel();
             this.infoPanel = new System.Windows.Forms.Panel();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.textInfoTabPage1 = new System.Windows.Forms.TabPage();
+            this.imageInformationTextBox = new System.Windows.Forms.TextBox();
+            this.previewTabPage = new System.Windows.Forms.TabPage();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.filesListBox = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.fileSourceComboBox = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.DSCCheckBox = new System.Windows.Forms.CheckBox();
             this.skipWinDirectoryCheckBox = new System.Windows.Forms.CheckBox();
             this.allDrivesCheckBox = new System.Windows.Forms.CheckBox();
             this.pathTextBox = new System.Windows.Forms.TextBox();
@@ -88,14 +92,16 @@
             this.openDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabControl = new System.Windows.Forms.TabControl();
-            this.textInfoTabPage1 = new System.Windows.Forms.TabPage();
-            this.previewTabPage = new System.Windows.Forms.TabPage();
-            this.imageInformationTextBox = new System.Windows.Forms.TextBox();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.DSCToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.skipWinDirectoryToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.SendBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.infoPanel.SuspendLayout();
+            this.tabControl.SuspendLayout();
+            this.textInfoTabPage1.SuspendLayout();
+            this.previewTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.settingsPanel.SuspendLayout();
@@ -107,10 +113,6 @@
             this.groupBox6.SuspendLayout();
             this.mainMenuStrip.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
-            this.tabControl.SuspendLayout();
-            this.textInfoTabPage1.SuspendLayout();
-            this.previewTabPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -164,6 +166,64 @@
             this.infoPanel.Size = new System.Drawing.Size(315, 199);
             this.infoPanel.TabIndex = 1;
             // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.textInfoTabPage1);
+            this.tabControl.Controls.Add(this.previewTabPage);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(313, 197);
+            this.tabControl.TabIndex = 0;
+            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+            // 
+            // textInfoTabPage1
+            // 
+            this.textInfoTabPage1.Controls.Add(this.imageInformationTextBox);
+            this.textInfoTabPage1.Location = new System.Drawing.Point(4, 22);
+            this.textInfoTabPage1.Name = "textInfoTabPage1";
+            this.textInfoTabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.textInfoTabPage1.Size = new System.Drawing.Size(305, 171);
+            this.textInfoTabPage1.TabIndex = 0;
+            this.textInfoTabPage1.Text = "Информация";
+            this.textInfoTabPage1.UseVisualStyleBackColor = true;
+            // 
+            // imageInformationTextBox
+            // 
+            this.imageInformationTextBox.BackColor = System.Drawing.SystemColors.Window;
+            this.imageInformationTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.imageInformationTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.imageInformationTextBox.Location = new System.Drawing.Point(3, 3);
+            this.imageInformationTextBox.Multiline = true;
+            this.imageInformationTextBox.Name = "imageInformationTextBox";
+            this.imageInformationTextBox.ReadOnly = true;
+            this.imageInformationTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.imageInformationTextBox.Size = new System.Drawing.Size(299, 165);
+            this.imageInformationTextBox.TabIndex = 1;
+            this.imageInformationTextBox.TabStop = false;
+            // 
+            // previewTabPage
+            // 
+            this.previewTabPage.Controls.Add(this.pictureBox);
+            this.previewTabPage.Location = new System.Drawing.Point(4, 22);
+            this.previewTabPage.Name = "previewTabPage";
+            this.previewTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.previewTabPage.Size = new System.Drawing.Size(305, 171);
+            this.previewTabPage.TabIndex = 1;
+            this.previewTabPage.Text = "Быстрый просмотр";
+            this.previewTabPage.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(299, 165);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox.TabIndex = 0;
+            this.pictureBox.TabStop = false;
+            // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -184,7 +244,6 @@
             this.filesListBox.Name = "filesListBox";
             this.filesListBox.Size = new System.Drawing.Size(562, 197);
             this.filesListBox.TabIndex = 7;
-  //          this.filesListBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.filesListBox_MouseClick);
             this.filesListBox.SelectedIndexChanged += new System.EventHandler(this.files_SelectedIndexChanged);
             this.filesListBox.DoubleClick += new System.EventHandler(this.files_DoubleClick);
             this.filesListBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.filesListBox_MouseDown);
@@ -192,8 +251,7 @@
             // panel2
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel2, 2);
-            this.panel2.Controls.Add(this.fileSourceComboBox);
-            this.panel2.Controls.Add(this.label7);
+            this.panel2.Controls.Add(this.DSCCheckBox);
             this.panel2.Controls.Add(this.skipWinDirectoryCheckBox);
             this.panel2.Controls.Add(this.allDrivesCheckBox);
             this.panel2.Controls.Add(this.pathTextBox);
@@ -204,29 +262,18 @@
             this.panel2.Size = new System.Drawing.Size(885, 54);
             this.panel2.TabIndex = 0;
             // 
-            // fileSourceComboBox
+            // DSCCheckBox
             // 
-            this.fileSourceComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.fileSourceComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.fileSourceComboBox.FormattingEnabled = true;
-            this.fileSourceComboBox.Items.AddRange(new object[] {
-            "Любой",
-            "Камера",
-            "Сканирование"});
-            this.fileSourceComboBox.Location = new System.Drawing.Point(738, 28);
-            this.fileSourceComboBox.Name = "fileSourceComboBox";
-            this.fileSourceComboBox.Size = new System.Drawing.Size(137, 21);
-            this.fileSourceComboBox.TabIndex = 7;
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(604, 32);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(129, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "Источник изображения:";
+            this.DSCCheckBox.AutoSize = true;
+            this.DSCCheckBox.Location = new System.Drawing.Point(319, 31);
+            this.DSCCheckBox.Name = "DSCCheckBox";
+            this.DSCCheckBox.Size = new System.Drawing.Size(128, 17);
+            this.DSCCheckBox.TabIndex = 5;
+            this.DSCCheckBox.Text = "Только фотографии";
+            this.DSCToolTip.SetToolTip(this.DSCCheckBox, "Поиск изображений с фотоаппарата или других устройств оснащенных камерой. Отскани" +
+        "рованные изображения (по возможности) не будут учитываться при поиске (в тестиро" +
+        "вании)\r\n");
+            this.DSCCheckBox.UseVisualStyleBackColor = true;
             // 
             // skipWinDirectoryCheckBox
             // 
@@ -236,6 +283,7 @@
             this.skipWinDirectoryCheckBox.Size = new System.Drawing.Size(188, 17);
             this.skipWinDirectoryCheckBox.TabIndex = 4;
             this.skipWinDirectoryCheckBox.Text = "Не сканировать папку системы";
+            this.skipWinDirectoryToolTip.SetToolTip(this.skipWinDirectoryCheckBox, "Не сканировать папку с операционной системой");
             this.skipWinDirectoryCheckBox.UseVisualStyleBackColor = true;
             // 
             // allDrivesCheckBox
@@ -658,7 +706,6 @@
             this.mainMenuStrip.Size = new System.Drawing.Size(891, 24);
             this.mainMenuStrip.TabIndex = 0;
             this.mainMenuStrip.Text = "menuStrip1";
-   //         this.mainMenuStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.mainMenuStrip_ItemClicked_1);
             // 
             // fileToolStripMenuItem
             // 
@@ -695,6 +742,7 @@
             // 
             this.helpToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.showHelpToolStripMenuItem,
+            this.SendBugToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem1.Name = "helpToolStripMenuItem1";
             this.helpToolStripMenuItem1.Size = new System.Drawing.Size(65, 20);
@@ -703,14 +751,14 @@
             // showHelpToolStripMenuItem
             // 
             this.showHelpToolStripMenuItem.Name = "showHelpToolStripMenuItem";
-            this.showHelpToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.showHelpToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.showHelpToolStripMenuItem.Text = "Посмотреть справку";
             this.showHelpToolStripMenuItem.Click += new System.EventHandler(this.showHelpToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(188, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.aboutToolStripMenuItem.Text = "О программе";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutButton_Click);
             // 
@@ -744,63 +792,12 @@
             this.openMapToolStripMenuItem.Text = "Показать на карте";
             this.openMapToolStripMenuItem.Click += new System.EventHandler(this.openMapToolStripMenuItem_Click);
             // 
-            // tabControl
+            // SendBugToolStripMenuItem
             // 
-            this.tabControl.Controls.Add(this.textInfoTabPage1);
-            this.tabControl.Controls.Add(this.previewTabPage);
-            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl.Location = new System.Drawing.Point(0, 0);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(313, 197);
-            this.tabControl.TabIndex = 0;
-            this.tabControl.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
-            // 
-            // textInfoTabPage1
-            // 
-            this.textInfoTabPage1.Controls.Add(this.imageInformationTextBox);
-            this.textInfoTabPage1.Location = new System.Drawing.Point(4, 22);
-            this.textInfoTabPage1.Name = "textInfoTabPage1";
-            this.textInfoTabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.textInfoTabPage1.Size = new System.Drawing.Size(305, 171);
-            this.textInfoTabPage1.TabIndex = 0;
-            this.textInfoTabPage1.Text = "Информация";
-            this.textInfoTabPage1.UseVisualStyleBackColor = true;
-            // 
-            // previewTabPage
-            // 
-            this.previewTabPage.Controls.Add(this.pictureBox);
-            this.previewTabPage.Location = new System.Drawing.Point(4, 22);
-            this.previewTabPage.Name = "previewTabPage";
-            this.previewTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.previewTabPage.Size = new System.Drawing.Size(305, 171);
-            this.previewTabPage.TabIndex = 1;
-            this.previewTabPage.Text = "Быстрый просмотр";
-            this.previewTabPage.UseVisualStyleBackColor = true;
-            // 
-            // imageInformationTextBox
-            // 
-            this.imageInformationTextBox.BackColor = System.Drawing.SystemColors.Window;
-            this.imageInformationTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.imageInformationTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.imageInformationTextBox.Location = new System.Drawing.Point(3, 3);
-            this.imageInformationTextBox.Multiline = true;
-            this.imageInformationTextBox.Name = "imageInformationTextBox";
-            this.imageInformationTextBox.ReadOnly = true;
-            this.imageInformationTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.imageInformationTextBox.Size = new System.Drawing.Size(299, 165);
-            this.imageInformationTextBox.TabIndex = 1;
-            this.imageInformationTextBox.TabStop = false;
-            // 
-            // pictureBox
-            // 
-            this.pictureBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(299, 165);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox.TabIndex = 0;
-            this.pictureBox.TabStop = false;
+            this.SendBugToolStripMenuItem.Name = "SendBugToolStripMenuItem";
+            this.SendBugToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.SendBugToolStripMenuItem.Text = "Сообщить о проблеме";
+            this.SendBugToolStripMenuItem.Click += new System.EventHandler(this.SendBugToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -814,7 +811,6 @@
             this.MinimumSize = new System.Drawing.Size(700, 500);
             this.Name = "MainForm";
             this.Text = "...";
-       //     this.MaximumSizeChanged += new System.EventHandler(this.MainForm_MaximumSizeChanged);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
@@ -823,6 +819,11 @@
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.infoPanel.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
+            this.textInfoTabPage1.ResumeLayout(false);
+            this.textInfoTabPage1.PerformLayout();
+            this.previewTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
@@ -842,11 +843,6 @@
             this.mainMenuStrip.ResumeLayout(false);
             this.mainMenuStrip.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
-            this.tabControl.ResumeLayout(false);
-            this.textInfoTabPage1.ResumeLayout(false);
-            this.textInfoTabPage1.PerformLayout();
-            this.previewTabPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -910,13 +906,15 @@
         private System.Windows.Forms.ToolStripMenuItem openDirectoryToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem openMapToolStripMenuItem;
-        private System.Windows.Forms.ComboBox fileSourceComboBox;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage textInfoTabPage1;
         private System.Windows.Forms.TextBox imageInformationTextBox;
         private System.Windows.Forms.TabPage previewTabPage;
         private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.CheckBox DSCCheckBox;
+        private System.Windows.Forms.ToolTip DSCToolTip;
+        private System.Windows.Forms.ToolTip skipWinDirectoryToolTip;
+        private System.Windows.Forms.ToolStripMenuItem SendBugToolStripMenuItem;
     }
 }
 
