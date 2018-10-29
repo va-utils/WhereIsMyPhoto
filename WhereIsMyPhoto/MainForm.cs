@@ -790,6 +790,11 @@ namespace WhereIsMyPhoto
 
         private void CreatePreview()
         {
+            if(imageWorks!=null)
+            {
+                imageWorks.img.Dispose();
+                imageWorks = null;
+            }
             imageWorks = new ImageWorks(images[filesListBox.SelectedIndex]);
             bool isOK = imageWorks.TryCreateImageWithCorrectOrientation();
             if (isOK)
