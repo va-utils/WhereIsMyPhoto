@@ -67,6 +67,7 @@
             this.Name = "Preview";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Быстрый просмотр";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Preview_FormClosing);
             this.Load += new System.EventHandler(this.Previev_Load);
             this.SizeChanged += new System.EventHandler(this.Preview_SizeChanged);
             this.panel1.ResumeLayout(false);

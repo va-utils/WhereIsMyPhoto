@@ -87,6 +87,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.showHelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SendBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,7 +95,6 @@
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DSCToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.skipWinDirectoryToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.SendBugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.infoPanel.SuspendLayout();
@@ -146,7 +146,6 @@
             this.statusStrip.Size = new System.Drawing.Size(891, 20);
             this.statusStrip.TabIndex = 6;
             this.statusStrip.Text = "statusStrip1";
-            this.statusStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip_ItemClicked);
             // 
             // status
             // 
@@ -755,6 +754,13 @@
             this.showHelpToolStripMenuItem.Text = "Посмотреть справку";
             this.showHelpToolStripMenuItem.Click += new System.EventHandler(this.showHelpToolStripMenuItem_Click);
             // 
+            // SendBugToolStripMenuItem
+            // 
+            this.SendBugToolStripMenuItem.Name = "SendBugToolStripMenuItem";
+            this.SendBugToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.SendBugToolStripMenuItem.Text = "Сообщить о проблеме";
+            this.SendBugToolStripMenuItem.Click += new System.EventHandler(this.SendBugToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
@@ -791,13 +797,6 @@
             this.openMapToolStripMenuItem.Size = new System.Drawing.Size(251, 22);
             this.openMapToolStripMenuItem.Text = "Показать на карте";
             this.openMapToolStripMenuItem.Click += new System.EventHandler(this.openMapToolStripMenuItem_Click);
-            // 
-            // SendBugToolStripMenuItem
-            // 
-            this.SendBugToolStripMenuItem.Name = "SendBugToolStripMenuItem";
-            this.SendBugToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.SendBugToolStripMenuItem.Text = "Сообщить о проблеме";
-            this.SendBugToolStripMenuItem.Click += new System.EventHandler(this.SendBugToolStripMenuItem_Click);
             // 
             // MainForm
             // 

@@ -2,15 +2,11 @@
 using MetadataExtractor.Formats.Exif;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WhereIsMyPhoto
@@ -121,6 +117,10 @@ namespace WhereIsMyPhoto
                 {
                     oldSelectedIndex = filesListBox.SelectedIndex;
                     CreatePreview();
+                }
+                else
+                {
+                    imageWorks?.img?.Dispose();
                 }
                     
             }
@@ -406,7 +406,10 @@ namespace WhereIsMyPhoto
 
                 imagesBindingSource.Clear();
                 imageInformationTextBox.Clear();
+                
                 pictureBox.Image = null;
+                imageWorks?.img?.Dispose();
+
 
                 //---пуск задачи---//
                 cancelTokenSource = new CancellationTokenSource();
@@ -727,13 +730,7 @@ namespace WhereIsMyPhoto
                     filesListBox.SelectedIndex = i;
                     new Preview(images[filesListBox.SelectedIndex]).Show();
                 }
-
             }
-        }
-
-        private void statusStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
         }
 
         private void openMapToolStripMenuItem_Click(object sender, EventArgs e)
@@ -760,11 +757,6 @@ namespace WhereIsMyPhoto
         {
             if ((oldSelectedIndex != filesListBox.SelectedIndex))
             {
-                if (tabControl.SelectedIndex == 0)
-                {
-                    pictureBox.Image = null;
-                    imageWorks = null;
-                }
                 if (tabControl.SelectedIndex == 1)
                 {
                     if (filesListBox.SelectedIndex != -1)
@@ -790,11 +782,7 @@ namespace WhereIsMyPhoto
 
         private void CreatePreview()
         {
-            if(imageWorks!=null)
-            {
-                imageWorks.img.Dispose();
-                imageWorks = null;
-            }
+            imageWorks?.img?.Dispose();
             imageWorks = new ImageWorks(images[filesListBox.SelectedIndex]);
             bool isOK = imageWorks.TryCreateImageWithCorrectOrientation();
             if (isOK)
@@ -805,11 +793,7 @@ namespace WhereIsMyPhoto
 
         private void RedrawPreview()
         {
-            if(pictureBox.Image!=null)
-            {
-              //  Console.WriteLine("Size of PictureBox: " + pictureBox.Size);
-                pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);
-            }          
+            pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);      
         }
 
         private const int WM_EXITSIZEMOVE = 0x0232;

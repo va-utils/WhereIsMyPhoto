@@ -61,5 +61,14 @@ namespace WhereIsMyPhoto
                 StoredWindowState = WindowState;
             }
         }
+
+        private void Preview_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(imageWorks!=null)
+            {
+                imageWorks.img.Dispose();
+                imageWorks = null;
+            }
+        }
     }
 }
