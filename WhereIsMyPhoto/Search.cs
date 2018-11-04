@@ -15,7 +15,7 @@ namespace WhereIsMyPhoto
 {
     public class Search
     {
-        public List<ImageInformation> ImageList { get; private set; }
+       // public List<ImageInformation> ImageList { get; private set; }
 
         private string path;
 
@@ -34,7 +34,7 @@ namespace WhereIsMyPhoto
         {
             systemDirectoryScan = sysdirscan;
             this.path = path;
-            ImageList = new List<ImageInformation>(50);
+           // ImageList = new List<ImageInformation>(50);
         }
 
         public event SearchChangeFolderEventHandler ChangeFolder;
@@ -42,20 +42,20 @@ namespace WhereIsMyPhoto
         public event EventHandler IOFatalError;
 
         /* главная функция поиска всех изображений по заданному пути */
-        public async Task<List<ImageInformation>> GetImagesWithMyParams(ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, bool isDSC, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
+        public async Task/*Task<List<ImageInformation>>*/ GetImagesWithMyParams(ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, bool isDSC, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
         {
             if(!allDrives)
             {
                 Trace.WriteLine("Начат поиск в " + path);
-                return await Task.Run(() => ImageList = GetImagesUponMyCriteria(path, iso, date, et, ep, or, isDSC, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token), token);
+               /* return*/ await Task.Run(() => /*ImageList = */GetImagesUponMyCriteria(path, iso, date, et, ep, or, isDSC, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token), token);
             }
                 
             else
             {
                 Trace.WriteLine("Начат поиск по всему компьютеру");
                 DriveInfo[] readyDrives = DriveInfo.GetDrives().Where((d)=>d.IsReady).ToArray();
-                ImageList = new List<ImageInformation>(50);
-                return await Task.Run(() =>
+              //  ImageList = new List<ImageInformation>(50);
+                /*return*/ await Task.Run(() =>
                 {
                     foreach(var d in readyDrives)
                     {
@@ -64,12 +64,13 @@ namespace WhereIsMyPhoto
                         if (d.IsReady)
                         {
                             Trace.WriteLine("Поиск по диску " + d.RootDirectory.FullName);
-                            ImageList.AddRange(GetImagesUponMyCriteria(d.RootDirectory.FullName, iso, date, et, ep, or, isDSC, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token));
+                            //   ImageList.AddRange(GetImagesUponMyCriteria(d.RootDirectory.FullName, iso, date, et, ep, or, isDSC, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token));
+                            GetImagesUponMyCriteria(d.RootDirectory.FullName, iso, date, et, ep, or, isDSC, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token); 
                         }    
                         else
                             Trace.WriteLine("Диск " + d.Name + " был доступен в начале сканирования, но оказался недоступен в дальнейшем. Не сканировался.");
                     }
-                    return ImageList;
+                 //   return ImageList;
                 },token);
             }
         }
@@ -600,11 +601,11 @@ namespace WhereIsMyPhoto
             return true;
         }
 
-        private List<ImageInformation> GetImagesUponMyCriteria(string path, ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, bool isDSC, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
+        private void/*List<ImageInformation>*/ GetImagesUponMyCriteria(string path, ISO iso, Date date, ExposureTime et, ExposureProgram ep, Orientation or, bool isDSC, string camName, bool isManualWhiteBalance, bool isFlash, bool isGeo, bool isEdit, CancellationToken token)
         {
             Debug.Assert(String.IsNullOrWhiteSpace(path) == false, "Передана пустая  строка в GetAllImages()");
 
-            List<ImageInformation> result = new List<ImageInformation>();
+           // List<ImageInformation> result = new List<ImageInformation>();
             string[] dirs =  null;
             string[] files = null;
             try
@@ -624,12 +625,12 @@ namespace WhereIsMyPhoto
                 {
                     Console.WriteLine("Диск " + drive.Name + " был извлечен, или содержит ошибки, мешаюшие поиску");
                     Trace.WriteLine("Диск " + drive.Name + " был извлечен, или содержит ошибки, мешаюшие поиску");
-                    return result;
+                    return /*result*/;
                 }
                 if (dirs == null || files == null)
                 {
                     Trace.WriteLine("Массивы со списком файлов или папок - null");
-                    return result;
+                    return /*result*/;
                 }
             }
 
@@ -639,7 +640,7 @@ namespace WhereIsMyPhoto
             {
                 if (token.IsCancellationRequested)
                 {
-                    return result;
+                    return;// result;
                 }
                 try
                 {
@@ -647,7 +648,7 @@ namespace WhereIsMyPhoto
                     if(isMatch(f,dirsPhoto,iso,date,et,ep,or,isDSC, camName, isManualWhiteBalance,isFlash,isGeo,isEdit))
                     {
                         ImageInformation ciexif = new ImageInformation(f, dirsPhoto);
-                        result.Add(ciexif);
+                       // result.Add(ciexif);
                         NewFile?.Invoke(new SearchNewFileEventArgs(ciexif));
                     }
                 }
@@ -668,7 +669,7 @@ namespace WhereIsMyPhoto
                         Console.WriteLine("Диск " + drive.Name + " был извлечен, или содержит ошибки, мешаюшие поиску");
                         Trace.WriteLine("Диск " + drive.Name + " был извлечен, или содержит ошибки, мешаюшие поиску");
                         IOFatalError?.Invoke(this, new EventArgs());
-                        return result;
+                        return; //result;
                     }
 
                 }
@@ -692,11 +693,12 @@ namespace WhereIsMyPhoto
 
                 if (token.IsCancellationRequested)
                 {
-                    return result;
+                    return;// result;
                 }
                 try
                 {
-                    result.AddRange(GetImagesUponMyCriteria(d,iso,date,et,ep,or,isDSC, camName, isManualWhiteBalance,isFlash,isGeo,isEdit, token));
+                    //result.AddRange(GetImagesUponMyCriteria(d,iso,date,et,ep,or,isDSC, camName, isManualWhiteBalance,isFlash,isGeo,isEdit, token));
+                    GetImagesUponMyCriteria(d, iso, date, et, ep, or, isDSC, camName, isManualWhiteBalance, isFlash, isGeo, isEdit, token);
                 }
                 catch (UnauthorizedAccessException uae)
                 {
@@ -704,7 +706,7 @@ namespace WhereIsMyPhoto
                 }
             }
 
-            return result;
+           // return result;
         }
     }
 }

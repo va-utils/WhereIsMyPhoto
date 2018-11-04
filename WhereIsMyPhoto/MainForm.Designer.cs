@@ -152,7 +152,7 @@
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(16, 15);
             this.status.Text = "...";
-            this.status.Click += new System.EventHandler(this.status_Click);
+    //        this.status.Click += new System.EventHandler(this.status_Click);
             // 
             // infoPanel
             // 

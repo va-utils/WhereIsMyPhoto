@@ -80,8 +80,6 @@ namespace WhereIsMyPhoto
             }
         }
 
-
-
         public Image ScaleImage(int width, int height, Color clr) //сохраним пропорции изображения
         {
             Image source = img;
@@ -89,7 +87,6 @@ namespace WhereIsMyPhoto
            
             using (Graphics gr = Graphics.FromImage(dest))
             {
-
                 gr.FillRectangle(new SolidBrush(clr), 0, 0, width, height);  // Очищаем экран
                 gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
 

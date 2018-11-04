@@ -2,11 +2,15 @@
 using MetadataExtractor.Formats.Exif;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WhereIsMyPhoto
@@ -44,8 +48,7 @@ namespace WhereIsMyPhoto
         CancellationTokenSource cancelTokenSource;
         CancellationToken token;
 
-        List<ImageInformation> images = new List<ImageInformation>();
-        BindingSource imagesBindingSource;
+       // List<ImageInformation> images = new List<ImageInformation>();
         Search finder;
        // System.IO.FileStream forTraceFileStream;
 
@@ -61,9 +64,9 @@ namespace WhereIsMyPhoto
             if (filesListBox.SelectedIndex == -1) return;
             try
             {
-                Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)), "Пустое имя файла для открытия в просмотрщике");
+                Debug.Assert(!(String.IsNullOrWhiteSpace((filesListBox.SelectedItem as ImageInformation).FileName)), "Пустое имя файла для открытия в просмотрщике");
               //  string directoryPath = System.IO.Path.GetDirectoryName(images[filesListBox.SelectedIndex].FileName);
-                Process.Start(new ProcessStartInfo("explorer.exe"," /select, " + images[filesListBox.SelectedIndex].FileName));
+                Process.Start(new ProcessStartInfo("explorer.exe"," /select, " + (filesListBox.SelectedItem as ImageInformation).FileName));
             }
             catch (Exception ex)
             {
@@ -71,18 +74,9 @@ namespace WhereIsMyPhoto
             }
         }
 
-        private void OpenMapMenu_Click(object sender, EventArgs e)
-        {
-
-        }
-
         public MainForm()
         {
             InitializeComponent();
-            imagesBindingSource = new BindingSource
-            {
-                DataSource = images
-            }; 
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -95,7 +89,7 @@ namespace WhereIsMyPhoto
             this.Text = Application.ProductName + " " + Application.ProductVersion;
             endDateTimePicker.Value = endDateTimePicker.MaxDate = DateTime.Now.Date;
 
-            filesListBox.DataSource = imagesBindingSource;
+       //     filesListBox.DataSource = imagesBindingSource;
             filesListBox.DisplayMember = "FileName";
 
             if(Properties.Settings.Default.isFirstStart)
@@ -111,7 +105,7 @@ namespace WhereIsMyPhoto
         {
             if(filesListBox.SelectedIndex!=-1)
             {
-                this.imageInformationTextBox.Text = Search.GetInformation(images[filesListBox.SelectedIndex]);
+                this.imageInformationTextBox.Text = Search.GetInformation(/*images*/filesListBox.Items[filesListBox.SelectedIndex] as ImageInformation);
                 
                 if(tabControl.SelectedIndex == 1)
                 {
@@ -128,7 +122,7 @@ namespace WhereIsMyPhoto
 
         private void CheckGeoLocationForMenu(int index)
         {
-            GeoLocation rgl = Search.GetGPSInformation(images[index]);
+            GeoLocation rgl = Search.GetGPSInformation(filesListBox.Items[index] as ImageInformation);
             if (rgl != null)
             {
                 contextMenuStrip.Items[3].Visible = true;
@@ -159,7 +153,7 @@ namespace WhereIsMyPhoto
             }
             else
             {
-                imagesBindingSource.Add(fnfea.file);
+                filesListBox.Items.Add(fnfea.file);
             }
         }
 
@@ -404,7 +398,7 @@ namespace WhereIsMyPhoto
                 searchToolStripMenuItem.Click += Stop;
 
 
-                imagesBindingSource.Clear();
+                filesListBox.Items.Clear();
                 imageInformationTextBox.Clear();
                 
                 pictureBox.Image = null;
@@ -452,7 +446,7 @@ namespace WhereIsMyPhoto
                 //---тестируем поиск по датам, удалить в релизе
                 if (datesCheckBox.Checked)
                 {
-                    foreach (var i in images)
+                    foreach (var i in filesListBox.Items)
                     {
                         var sdir = ((ImageInformation)i).Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
                         var dbdate = sdir.GetDateTime(ExifDirectoryBase.TagDateTimeOriginal).Date;
@@ -463,28 +457,28 @@ namespace WhereIsMyPhoto
                 //---тестируем баланс белого (ручной)
                 if(WhiteBalanceСheckBox.Checked)
                 {
-                    foreach(var i in images)
+                    foreach(var i in filesListBox.Items)
                     {
-                        var sdir = i.Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+                        var sdir = ((ImageInformation)i).Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
                         var wb = sdir.GetUInt16(ExifDirectoryBase.TagWhiteBalanceMode);
-                        Debug.Assert(wb == 1, "White Balance Bug: " + i.FileName);
+                        Debug.Assert(wb == 1, "White Balance Bug: " + ((ImageInformation)i).FileName);
                     }
                 }
                 //---тестируем источник снимка
                 if(DSCCheckBox.Checked)
                 {
-                    foreach(var i in images)
+                    foreach(var i in filesListBox.Items)
                     {
-                        var sdir = i.Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+                        var sdir = ((ImageInformation)i).Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
                         var dsc = sdir.GetUInt16(ExifDirectoryBase.TagFileSource);
-                        Debug.Assert(dsc == 3, " DSC Bug: " + i.FileName);
+                        Debug.Assert(dsc == 3, " DSC Bug: " + ((ImageInformation)i).FileName);
                     }
                 }
 
                 //---тестируем модель камеры, удалить в релизе
                 if (cameraCheckBox.Checked)
                 {
-                    foreach(var x in imagesBindingSource)
+                    foreach(var x in filesListBox.Items)
                     {
                         if(x is ImageInformation)
                         {
@@ -499,7 +493,7 @@ namespace WhereIsMyPhoto
                
                 //---тестируем выдержку, удалить в релизе
                 if (ExposureTimeCheckBox.Checked)
-                foreach(var i in imagesBindingSource)
+                foreach(var i in filesListBox.Items)
                 {
                     var sdir = ((ImageInformation)i).Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
 
@@ -519,9 +513,9 @@ namespace WhereIsMyPhoto
                 //тестируем ISO
                 if(ISOCheckBox.Checked)
                 {
-                    foreach(var i in images)
+                    foreach(var i in filesListBox.Items)
                     {
-                        var sdir = i.Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
+                        var sdir = ((ImageInformation)i).Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
                         var dbiso = sdir.GetUInt16(ExifDirectoryBase.TagIsoEquivalent);
                         Debug.Assert((dbiso >= ushort.Parse(minISOTextBox.Text)) && (dbiso <= ushort.Parse(maxISOTextBox.Text)), "ISO Bug: " + ((ImageInformation)i).FileName);
                     }
@@ -530,29 +524,29 @@ namespace WhereIsMyPhoto
                 //тестируем вспышку
                 if(flashOnCheckBox.Checked)
                 {
-                    foreach (var i in images)
+                    foreach (var i in filesListBox.Items)
                     {
                         var sdir = ((ImageInformation)i).Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
                         ushort flash = sdir.GetUInt16(ExifDirectoryBase.TagFlash);
-                        Debug.Assert((flash&0x1)!=0, "Flash Bug: " + i.FileName + "Flash value: " + flash);
+                        Debug.Assert((flash&0x1)!=0, "Flash Bug: " + ((ImageInformation)i).FileName + "Flash value: " + flash);
                     }
                 }
 
                 //тестируем программу экспозиции
                 if(ExposureProgramCheckBox.Checked)
                 {
-                    foreach(var i in images)
+                    foreach(var i in filesListBox.Items)
                     {
                         var sdir = ((ImageInformation)i).Directories.OfType<ExifSubIfdDirectory>().FirstOrDefault();
                         ushort eProgram = sdir.GetUInt16(ExifDirectoryBase.TagExposureProgram);
-                        Debug.Assert(eProgram == (int)exposureProgramComboBox.SelectedIndex+1, "Exposure Program Bug: " + i.FileName + " EP Value: " + eProgram);
+                        Debug.Assert(eProgram == (int)exposureProgramComboBox.SelectedIndex+1, "Exposure Program Bug: " + ((ImageInformation)i).FileName + " EP Value: " + eProgram);
                     }
                 }
 
                 //тестируем ориентацию
                 if (ExposureProgramCheckBox.Checked)
                 {
-                    foreach (var i in images)
+                    foreach (var i in filesListBox.Items)
                     {
                         var sdir = ((ImageInformation)i).Directories.OfType<ExifIfd0Directory>().FirstOrDefault();
                         ushort orient = sdir.GetUInt16(ExifDirectoryBase.TagOrientation);
@@ -590,8 +584,7 @@ namespace WhereIsMyPhoto
             if (filesListBox.SelectedIndex == -1) return;
             try
             {
-                Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)), "Пустое имя файла для открытия в просмотрщике");
-                Process.Start(images[filesListBox.SelectedIndex].FileName);
+                Process.Start((filesListBox.SelectedItem as ImageInformation).FileName);
             }
             catch (Exception ex)
             {
@@ -643,11 +636,6 @@ namespace WhereIsMyPhoto
             }
         }
 
-        private void status_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void aboutButton_Click(object sender, EventArgs e)
         {
             AboutBox ab = new AboutBox();
@@ -659,11 +647,6 @@ namespace WhereIsMyPhoto
             pathTextBox.Enabled = browseButton.Enabled = !allDrivesCheckBox.Checked;
         }
 
-        private void mainMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
@@ -671,7 +654,7 @@ namespace WhereIsMyPhoto
 
         private void saveResultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(imagesBindingSource.Count!=0)
+            if(filesListBox.Items.Count!=0)
             {
                 if(searchSettings.Length != 0)
                 {
@@ -679,7 +662,7 @@ namespace WhereIsMyPhoto
                     forTextFile.Append(searchSettings);
                     forTextFile.AppendLine("-------------");
                     forTextFile.AppendLine("Найдены:");
-                    foreach (var f in imagesBindingSource)
+                    foreach (var f in filesListBox.Items)
                     {
                         forTextFile.AppendLine(((ImageInformation)f).FileName);
                     }
@@ -718,7 +701,7 @@ namespace WhereIsMyPhoto
                 {
                     filesListBox.SelectedIndex = i;
                     CheckGeoLocationForMenu(i);
-                    contextMenuStrip.Items[0].Text = System.IO.Path.GetFileName(images[filesListBox.SelectedIndex].FileName);
+                    contextMenuStrip.Items[0].Text = System.IO.Path.GetFileName((filesListBox.SelectedItem as ImageInformation).FileName);
                     contextMenuStrip.Show(MousePosition);
                 }
             }
@@ -728,7 +711,7 @@ namespace WhereIsMyPhoto
                 if(i!=-1)
                 {
                     filesListBox.SelectedIndex = i;
-                    new Preview(images[filesListBox.SelectedIndex]).Show();
+                    new Preview(filesListBox.SelectedItem as ImageInformation).Show();
                 }
             }
         }
@@ -738,9 +721,9 @@ namespace WhereIsMyPhoto
             if (filesListBox.SelectedIndex == -1) return;
             try
             {
-                Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)), "Пустое имя файла для открытия в просмотрщике");
+               // Debug.Assert(!(String.IsNullOrWhiteSpace(images[filesListBox.SelectedIndex].FileName)), "Пустое имя файла для открытия в просмотрщике");
                 
-                GeoLocation gl = Search.GetGPSInformation(images[filesListBox.SelectedIndex]);
+                GeoLocation gl = Search.GetGPSInformation((filesListBox.SelectedItem as ImageInformation));
                 if(gl!=null)
                 {
                     string url = string.Format("https://www.openstreetmap.org/?mlat={0}&mlon={1}#map=17/{0}/{1}", gl.Latitude.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US")), gl.Longitude.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-US")));
@@ -783,7 +766,7 @@ namespace WhereIsMyPhoto
         private void CreatePreview()
         {
             imageWorks?.img?.Dispose();
-            imageWorks = new ImageWorks(images[filesListBox.SelectedIndex]);
+            imageWorks = new ImageWorks((filesListBox.SelectedItem as ImageInformation));
             bool isOK = imageWorks.TryCreateImageWithCorrectOrientation();
             if (isOK)
                 pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);
@@ -793,7 +776,7 @@ namespace WhereIsMyPhoto
 
         private void RedrawPreview()
         {
-            pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);      
+             pictureBox.Image = imageWorks?.ScaleImage(pictureBox.Width, pictureBox.Height, Color.White);      
         }
 
         private const int WM_EXITSIZEMOVE = 0x0232;
