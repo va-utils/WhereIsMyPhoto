@@ -252,9 +252,7 @@ namespace WhereIsMyPhoto
                             case 8:
                                 sb.AppendLine("Ориентация: горизонтальная, повернут на 270°");
                                 break;
-                            default:
-                                sb.AppendLine("Ориентация: " + orient);
-                                break;
+                                
                         }
                         // sb.AppendLine(subifd0dir.GetDescription(ExifDirectoryBase.TagOrientation));
                     }
