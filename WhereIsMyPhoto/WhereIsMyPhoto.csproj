@@ -69,6 +69,7 @@
       <DependentUpon>AboutBox.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageWorks.cs" />
+    <Compile Include="OSMNominatim.cs" />
     <Compile Include="Preview.cs">
       <SubType>Form</SubType>
     </Compile>

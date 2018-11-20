@@ -42,6 +42,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.filesListBox = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.gpsDataCheckBox = new System.Windows.Forms.CheckBox();
             this.DSCCheckBox = new System.Windows.Forms.CheckBox();
             this.skipWinDirectoryCheckBox = new System.Windows.Forms.CheckBox();
             this.allDrivesCheckBox = new System.Windows.Forms.CheckBox();
@@ -93,8 +94,7 @@
             this.openDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DSCToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.skipWinDirectoryToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.infoPanel.SuspendLayout();
@@ -152,7 +152,6 @@
             this.status.Name = "status";
             this.status.Size = new System.Drawing.Size(16, 15);
             this.status.Text = "...";
-    //        this.status.Click += new System.EventHandler(this.status_Click);
             // 
             // infoPanel
             // 
@@ -250,6 +249,7 @@
             // panel2
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel2, 2);
+            this.panel2.Controls.Add(this.gpsDataCheckBox);
             this.panel2.Controls.Add(this.DSCCheckBox);
             this.panel2.Controls.Add(this.skipWinDirectoryCheckBox);
             this.panel2.Controls.Add(this.allDrivesCheckBox);
@@ -261,6 +261,18 @@
             this.panel2.Size = new System.Drawing.Size(885, 54);
             this.panel2.TabIndex = 0;
             // 
+            // gpsDataCheckBox
+            // 
+            this.gpsDataCheckBox.AutoSize = true;
+            this.gpsDataCheckBox.Location = new System.Drawing.Point(454, 31);
+            this.gpsDataCheckBox.Name = "gpsDataCheckBox";
+            this.gpsDataCheckBox.Size = new System.Drawing.Size(337, 17);
+            this.gpsDataCheckBox.TabIndex = 6;
+            this.gpsDataCheckBox.Text = "Дополнительная информация о местоположении (если есть)";
+            this.toolTip.SetToolTip(this.gpsDataCheckBox, "Запрашивать из картографического сервиса OpenStreetMap сведения о местоположении " +
+        "(такие как адрес)");
+            this.gpsDataCheckBox.UseVisualStyleBackColor = true;
+            // 
             // DSCCheckBox
             // 
             this.DSCCheckBox.AutoSize = true;
@@ -269,9 +281,9 @@
             this.DSCCheckBox.Size = new System.Drawing.Size(128, 17);
             this.DSCCheckBox.TabIndex = 5;
             this.DSCCheckBox.Text = "Только фотографии";
-            this.DSCToolTip.SetToolTip(this.DSCCheckBox, "Поиск изображений с фотоаппарата или других устройств оснащенных камерой. Отскани" +
+            this.toolTip.SetToolTip(this.DSCCheckBox, "Поиск изображений с фотоаппарата или других устройств оснащенных камерой. Отскани" +
         "рованные изображения (по возможности) не будут учитываться при поиске (в тестиро" +
-        "вании)\r\n");
+        "вании)");
             this.DSCCheckBox.UseVisualStyleBackColor = true;
             // 
             // skipWinDirectoryCheckBox
@@ -282,7 +294,7 @@
             this.skipWinDirectoryCheckBox.Size = new System.Drawing.Size(188, 17);
             this.skipWinDirectoryCheckBox.TabIndex = 4;
             this.skipWinDirectoryCheckBox.Text = "Не сканировать папку системы";
-            this.skipWinDirectoryToolTip.SetToolTip(this.skipWinDirectoryCheckBox, "Не сканировать папку с операционной системой");
+            this.toolTip.SetToolTip(this.skipWinDirectoryCheckBox, "Не сканировать папку с операционной системой");
             this.skipWinDirectoryCheckBox.UseVisualStyleBackColor = true;
             // 
             // allDrivesCheckBox
@@ -798,6 +810,13 @@
             this.openMapToolStripMenuItem.Text = "Показать на карте";
             this.openMapToolStripMenuItem.Click += new System.EventHandler(this.openMapToolStripMenuItem_Click);
             // 
+            // toolTip
+            // 
+            this.toolTip.AutoPopDelay = 8000;
+            this.toolTip.InitialDelay = 500;
+            this.toolTip.ReshowDelay = 100;
+            this.toolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -911,9 +930,9 @@
         private System.Windows.Forms.TabPage previewTabPage;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.CheckBox DSCCheckBox;
-        private System.Windows.Forms.ToolTip DSCToolTip;
-        private System.Windows.Forms.ToolTip skipWinDirectoryToolTip;
         private System.Windows.Forms.ToolStripMenuItem SendBugToolStripMenuItem;
+        private System.Windows.Forms.CheckBox gpsDataCheckBox;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

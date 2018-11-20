@@ -13,16 +13,24 @@ using System.Threading.Tasks;
 
 namespace WhereIsMyPhoto
 {
+    
     public class Search
     {
        // public List<ImageInformation> ImageList { get; private set; }
 
+        
         private string path;
 
         bool allDrives;
         bool systemDirectoryScan;
 
         bool windirSkipFlag;
+
+        static Dictionary<string, string> gpsData;
+        static Search()
+        {
+            gpsData = new Dictionary<string, string>(50);
+        }
 
         public Search(bool sysdirscan = true)
         {
@@ -75,7 +83,9 @@ namespace WhereIsMyPhoto
             }
         }
 
-        public static string GetInformation(ImageInformation img)
+        
+
+        public static string GetInformation(ImageInformation img, bool gps_flag)
         {
             
             Debug.Assert(img != null, "Передано пустое значение в GetInformation();");
@@ -275,8 +285,28 @@ namespace WhereIsMyPhoto
                 if (gl != null)
                 {
                     sb.AppendLine("Геолокация (координаты): " + "долгота: " + gl.Longitude + " широта: " + gl.Latitude);
+                    
+                    if (gps_flag && !gl.IsZero)
+                    {
+                        if (gpsData.ContainsKey(img.FileName) == false) //еще не работали с этим файлом
+                        {
+                            OSMNominatim osm = new OSMNominatim(gl.Latitude, gl.Longitude, false);
+                            if (osm.TryReverseGeocoding())
+                            {
+                                string information = osm.FullInformation;
+                                gpsData.Add(img.FileName, information);
+                                sb.AppendLine(string.Format("({0})", information));
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine(img.FileName + " информация из словаря...");
+                            string information = gpsData[img.FileName];
+                            sb.AppendLine(string.Format("({0})", information));
+                        }
+                    }
+                    
                 }
-
 
 
                 try

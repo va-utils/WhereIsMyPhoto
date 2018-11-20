@@ -105,7 +105,7 @@ namespace WhereIsMyPhoto
         {
             if(filesListBox.SelectedIndex!=-1)
             {
-                this.imageInformationTextBox.Text = Search.GetInformation(/*images*/filesListBox.Items[filesListBox.SelectedIndex] as ImageInformation);
+                this.imageInformationTextBox.Text = Search.GetInformation(/*images*/filesListBox.Items[filesListBox.SelectedIndex] as ImageInformation, gpsDataCheckBox.Checked);
                 
                 if(tabControl.SelectedIndex == 1)
                 {
@@ -122,14 +122,17 @@ namespace WhereIsMyPhoto
 
         private void CheckGeoLocationForMenu(int index)
         {
+            Console.WriteLine("Check...");
             GeoLocation rgl = Search.GetGPSInformation(filesListBox.Items[index] as ImageInformation);
             if (rgl != null)
             {
                 contextMenuStrip.Items[3].Visible = true;
+               // InfoContextMenuStrip.Items[0].Visible = true;
             }
             else
             {
                 contextMenuStrip.Items[3].Visible = false;
+               // InfoContextMenuStrip.Items[0].Visible = false;
             }
         }
 
@@ -302,7 +305,7 @@ namespace WhereIsMyPhoto
                 {
                     if(!string.IsNullOrWhiteSpace(CameraTextBox.Text))
                     {
-                        camName = CameraTextBox.Text;
+                        camName = CameraTextBox.Text.Trim().Split(' ')[0];
                         searchSettings.AppendLine("Поиск по модели камеры: " + camName);
                     }
                     else

@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace WhereIsMyPhoto
 {
@@ -31,9 +33,17 @@ namespace WhereIsMyPhoto
         {
             try
             {
+                /*
                 img = Image.FromFile(imagePath);
+                
+                 */
 
-                var subifd0dir = imageInformation.Directories.OfType<ExifIfd0Directory>().FirstOrDefault();
+                using (FileStream fileStream = new FileStream(imagePath,FileMode.Open))
+                {
+                    img = Image.FromStream(fileStream);
+                }
+
+                    var subifd0dir = imageInformation.Directories.OfType<ExifIfd0Directory>().FirstOrDefault();
                 if (subifd0dir != null && subifd0dir.ContainsTag(ExifDirectoryBase.TagOrientation))
                 {
                     uint orient = subifd0dir.GetUInt16(ExifDirectoryBase.TagOrientation);
