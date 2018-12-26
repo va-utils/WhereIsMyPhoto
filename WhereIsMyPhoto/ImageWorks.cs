@@ -125,7 +125,6 @@ namespace WhereIsMyPhoto
                     if (left < 1.0f) left = 0;
                     gr.DrawImage(source, left, 0, cx, dstheight);
                 }
-
                 return dest;
             }
         }

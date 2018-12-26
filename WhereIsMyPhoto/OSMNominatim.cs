@@ -15,7 +15,7 @@ namespace WhereIsMyPhoto
     class OSMNominatim
     {
 
-        WebClient webClient;
+        //WebClient webClient;
 
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }
@@ -90,8 +90,8 @@ namespace WhereIsMyPhoto
                 }
                 
 
-                stream.Close();
-                reader.Close();
+               // stream.Close();
+               // reader.Close();
                 isOK = true;
             }
             catch(Exception e)
