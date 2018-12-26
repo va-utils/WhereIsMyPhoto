@@ -118,7 +118,7 @@ namespace WhereIsMyPhoto_Sorter
                             }
                             else
                             {
-                                File.Copy(f, dname);
+                                File.Move(f, dname);
                             }
                             break;
                         }
