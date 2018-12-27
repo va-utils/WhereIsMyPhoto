@@ -13,7 +13,8 @@ namespace WhereIsMyPhoto_Sorter
 {
     class Sorter
     {
-        public event SortedFileChanged sortedFileChangedEvent;
+        public event SorterFileChanged sorterFileChangedEvent;
+        public event SorterMetadataError sorterMetadataErrorEvent;
         public string SourceDirectory { get; private set; }
         public string DestinationDirectory { get; private set; }
         public Params Parameters { get; private set; }
@@ -65,8 +66,6 @@ namespace WhereIsMyPhoto_Sorter
             string[] files = null;
             try
             {
-                if (!System.IO.Directory.Exists(DestinationDirectory))
-                    System.IO.Directory.CreateDirectory(DestinationDirectory);
                 /* string[]*/
                 dirs = System.IO.Directory.GetDirectories(path);
                 /* string[]*/
@@ -123,7 +122,7 @@ namespace WhereIsMyPhoto_Sorter
                             break;
                         }
                     }
-                    sortedFileChangedEvent?.Invoke(new SortedEventArgs(f, fileDateTime.Date.ToShortDateString(), Path.Combine(DestinationDirectory, result_directory)));
+                    sorterFileChangedEvent?.Invoke(new SortedEventArgs(f, fileDateTime.Date.ToShortDateString(), Path.Combine(DestinationDirectory, result_directory)));
                     //--------------------------------------------------------
                 }
                 catch (UnauthorizedAccessException ex)
@@ -137,6 +136,7 @@ namespace WhereIsMyPhoto_Sorter
                 catch(MetadataException ex)
                 {
                     Trace.WriteLine("Date Extraction Error: "+ ex.Message);
+                    sorterMetadataErrorEvent?.Invoke(new SorterErrorEventArgs(f));
                 }
                 catch (NullReferenceException ex)
                 {
@@ -151,6 +151,8 @@ namespace WhereIsMyPhoto_Sorter
 
             foreach (var d in dirs)
             {
+                if (token.IsCancellationRequested)
+                    break;
                 try
                 {
                     Sort(d, token);

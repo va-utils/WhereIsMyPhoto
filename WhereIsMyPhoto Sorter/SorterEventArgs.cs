@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WhereIsMyPhoto_Sorter
 {
-    public delegate void SortedFileChanged(SortedEventArgs sea);
+    public delegate void SorterFileChanged(SortedEventArgs sea);
 
     public class SortedEventArgs : EventArgs
     {

@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SorterMainForm));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.about = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
@@ -82,6 +83,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.about);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
@@ -89,13 +91,25 @@
             this.panel1.Size = new System.Drawing.Size(617, 54);
             this.panel1.TabIndex = 0;
             // 
+            // about
+            // 
+            this.about.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.about.Location = new System.Drawing.Point(559, 9);
+            this.about.Name = "about";
+            this.about.Size = new System.Drawing.Size(49, 42);
+            this.about.TabIndex = 2;
+            this.about.Text = "?";
+            this.about.UseVisualStyleBackColor = true;
+            this.about.Click += new System.EventHandler(this.about_Click);
+            // 
             // label1
             // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.Location = new System.Drawing.Point(8, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(617, 54);
-            this.label1.TabIndex = 0;
+            this.label1.Size = new System.Drawing.Size(555, 46);
+            this.label1.TabIndex = 1;
             this.label1.Text = resources.GetString("label1.Text");
             // 
             // panel2
@@ -214,7 +228,7 @@
             this.fileOperationsComboBox.Items.AddRange(new object[] {
             "Копирование",
             "Перемещение"});
-            this.fileOperationsComboBox.Location = new System.Drawing.Point(387, 3);
+            this.fileOperationsComboBox.Location = new System.Drawing.Point(390, 3);
             this.fileOperationsComboBox.Name = "fileOperationsComboBox";
             this.fileOperationsComboBox.Size = new System.Drawing.Size(121, 21);
             this.fileOperationsComboBox.TabIndex = 9;
@@ -275,6 +289,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 359);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "SorterMainForm";
             this.Text = "WhereIsMyPhoto Sorter";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -300,7 +315,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox sourceDirectoryTextBox;
         private System.Windows.Forms.Button sourceDirectoryButton;
         private System.Windows.Forms.Label label2;
@@ -315,6 +329,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ListBox logListBox;
+        private System.Windows.Forms.Button about;
+        private System.Windows.Forms.Label label1;
     }
 }
 
