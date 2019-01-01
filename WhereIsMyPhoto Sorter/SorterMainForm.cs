@@ -143,7 +143,7 @@ namespace WhereIsMyPhoto_Sorter
             else
             {
                 statusLabel.Text = "Не удалось узнать дату снимка: " + seea.CurrentFile;
-                logListBox.Items.Add(seea.CurrentFile + " <?> не удалось выяснить дату съемки");
+                logListBox.Items.Add(seea.CurrentFile + " <?> не удалось выяснить дату съемки или сбой I/O");
             }
         }
 

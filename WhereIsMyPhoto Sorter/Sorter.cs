@@ -128,10 +128,12 @@ namespace WhereIsMyPhoto_Sorter
                 catch (UnauthorizedAccessException ex)
                 {
                     Trace.WriteLine("Windows Access Error : " + ex.Message);
+                    sorterMetadataErrorEvent?.Invoke(new SorterErrorEventArgs(f));
                 }
                 catch (IOException ex)
                 {
                     Trace.WriteLine("I/O Error : " + ex.Message);
+                    sorterMetadataErrorEvent?.Invoke(new SorterErrorEventArgs(f));
                 }
                 catch(MetadataException ex)
                 {
@@ -145,6 +147,7 @@ namespace WhereIsMyPhoto_Sorter
                 catch (Exception ex)
                 {
                     Trace.WriteLine("Unknow error: " + ex.Message);
+
                 }
 
             }
