@@ -30,7 +30,7 @@ namespace WhereIsMyPhoto
         {
             try
             {
-                Process.Start("http://va.eviko.org/");
+                Process.Start("http://va-soft.eviko.org/?page_id=15");
             }
             catch
             {
