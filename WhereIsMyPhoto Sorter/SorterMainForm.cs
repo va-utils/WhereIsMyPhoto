@@ -76,6 +76,20 @@ namespace WhereIsMyPhoto_Sorter
         {
             Trace.WriteLine("Нажата кнопка запуска");
 
+            if(string.IsNullOrWhiteSpace(destDirectoryTextBox.Text) || string.IsNullOrWhiteSpace(destDirectoryTextBox.Text))
+            {
+                MessageBox.Show("Заполните пожалуйста все поля.", "WhereIsMyPhoto");
+                Trace.WriteLine("Путь исходной или конечной папки пустой.");
+                return;
+            }
+
+            if(sourceDirectoryTextBox.Text.Equals(destDirectoryTextBox.Text))
+            {
+                MessageBox.Show("Путь исходной папки не может совпадать в путем конечной. Пожалуйста исправьте.", "WhereIsMyPhoto");
+                Trace.WriteLine("Путь исходной папки указан неверно");
+                return;
+            }
+
             if(!Directory.Exists(sourceDirectoryTextBox.Text)) 
             {
                 MessageBox.Show("Путь исходной папки указан неверно. Пожалуйста исправьте.", "WhereIsMyPhoto");
