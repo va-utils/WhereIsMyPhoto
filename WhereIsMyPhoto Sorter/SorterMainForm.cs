@@ -85,7 +85,7 @@ namespace WhereIsMyPhoto_Sorter
 
             if(sourceDirectoryTextBox.Text.Equals(destDirectoryTextBox.Text))
             {
-                MessageBox.Show("Путь исходной папки не может совпадать в путем конечной. Пожалуйста исправьте.", "WhereIsMyPhoto");
+                MessageBox.Show("Путь исходной папки не может совпадать с путем конечной. Пожалуйста исправьте.", "WhereIsMyPhoto");
                 Trace.WriteLine("Путь исходной папки указан неверно");
                 return;
             }
@@ -96,6 +96,7 @@ namespace WhereIsMyPhoto_Sorter
                 Trace.WriteLine("Путь исходной папки указан неверно");
                 return;
             }
+
             if (!Directory.Exists(destDirectoryTextBox.Text))
             {
                 try
