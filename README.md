@@ -18,6 +18,11 @@
 - Программа экспозиции
 - Ориентация фото
 
+## Скриншоты
+
+![WhereIsMyPhoto Screenshot](https://github.com/va-utils/WhereIsMyPhoto/blob/master/screen.PNG?raw=true "WhereIsMyPhoto Yandex Disk")
+
+
 ## Sorter
 
 В комплект входит программа для сортировки по дате съемки.   
